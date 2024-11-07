@@ -8,9 +8,9 @@ create table sys_user
     gender      int          not null,
     version     int          not null default 0,
     is_deleted  boolean      not null default false,
-    creator     int          not null,
+    creator     int,
     create_time timestamp    not null,
-    updater     int          not null,
+    updater     int,
     update_time timestamp    not null,
     primary key (id)
 );
@@ -60,9 +60,9 @@ create table sys_dict_type
     sort        int,
     version     int          not null default 0,
     is_deleted  boolean      not null default false,
-    creator     int          not null,
+    creator     int,
     create_time timestamp    not null,
-    updater     int          not null,
+    updater     int,
     update_time timestamp    not null,
     primary key (id)
 );
@@ -89,9 +89,9 @@ create table poop_log
     poop_log_type int       not null,
     version       int       not null default 0,
     is_deleted    boolean   not null default false,
-    creator       int       not null,
+    creator       int,
     create_time   timestamp not null,
-    updater       int       not null,
+    updater       int,
     update_time   timestamp not null,
     primary key (id)
 );
@@ -106,4 +106,3 @@ comment on column poop_log.creator is '创建者';
 comment on column poop_log.create_time is '创建时间';
 comment on column poop_log.updater is '更新者';
 comment on column poop_log.update_time is '更新时间';
-

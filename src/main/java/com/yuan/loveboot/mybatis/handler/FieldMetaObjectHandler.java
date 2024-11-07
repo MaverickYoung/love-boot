@@ -1,8 +1,6 @@
 package com.yuan.loveboot.mybatis.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.yuan.loveboot.constant.Constant;
-import com.yuan.loveboot.exception.RegisterException;
 import com.yuan.loveboot.system.service.SysCacheService;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.reflection.MetaObject;
@@ -28,13 +26,8 @@ public class FieldMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        Integer userId;
-        try {
-            userId = sysCacheService.getUserId();
-        } catch (RegisterException e) {
-            // 注册时异常设定userId为系统
-            userId = Constant.SYS_USER_ID;
-        }
+        Integer userId = sysCacheService.getUserId();
+
         LocalDateTime now = LocalDateTime.now();
 
         // 用户字段填充

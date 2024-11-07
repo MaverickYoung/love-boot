@@ -7,7 +7,7 @@ package com.yuan.loveboot.system.service;
  */
 public interface SysCacheService {
     /**
-     * 缓存AccessToken
+     * 缓存 访问令牌
      *
      * @param userId      用户ID
      * @param accessToken 访问令牌
@@ -15,21 +15,21 @@ public interface SysCacheService {
     void cacheAccessToken(Integer userId, String accessToken);
 
     /**
-     * 通过请求头中的AccessToken获取用户ID
+     * 通过请求头中的 访问令牌 获取用户ID
      *
      * @return 用户ID
      */
     Integer getUserId();
 
     /**
-     * 删除AccessToken缓存
+     * 删除 访问令牌 缓存
      *
      * @param userId 用户ID
      */
     void deleteAccessToken(Integer userId);
 
     /**
-     * 缓存验证码
+     * 缓存 验证码
      *
      * @param key   key
      * @param value 值
@@ -37,7 +37,7 @@ public interface SysCacheService {
     void cacheCaptcha(String key, String value);
 
     /**
-     * 通过验证码key获取值
+     * 通过 验证码key 获取值
      *
      * @param key key
      * @return 值
@@ -45,7 +45,7 @@ public interface SysCacheService {
     String getCaptcha(String key);
 
     /**
-     * 删除验证码缓存
+     * 删除 验证码 缓存
      *
      * @param key key
      */

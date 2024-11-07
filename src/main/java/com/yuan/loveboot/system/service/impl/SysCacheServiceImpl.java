@@ -2,7 +2,6 @@ package com.yuan.loveboot.system.service.impl;
 
 
 import com.yuan.loveboot.config.CacheConfig;
-import com.yuan.loveboot.exception.RegisterException;
 import com.yuan.loveboot.system.service.SysCacheService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -32,10 +31,6 @@ public class SysCacheServiceImpl implements SysCacheService {
     public Integer getUserId() {
         String accessToken = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (StringUtils.isBlank(accessToken)) {
-            // 注册请求抛出注册时异常
-            if ("/sys/user/register".equals(request.getRequestURI())) {
-                throw new RegisterException();
-            }
             return null;
         }
 
