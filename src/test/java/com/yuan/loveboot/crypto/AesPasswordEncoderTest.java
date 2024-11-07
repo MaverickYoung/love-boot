@@ -1,0 +1,17 @@
+package com.yuan.loveboot.crypto;
+
+import org.junit.jupiter.api.Test;
+
+/**
+ * 密码编码器测试
+ *
+ * @author Maverick
+ */
+class AesPasswordEncoderTest {
+    private final AesPasswordEncoder encoder = new AesPasswordEncoder();
+
+    @Test
+    void decryptTest() {
+        System.out.println(encoder.decrypt("5hHjqDbC/cL82qWAY7mVoQ=="));
+    }
+}
