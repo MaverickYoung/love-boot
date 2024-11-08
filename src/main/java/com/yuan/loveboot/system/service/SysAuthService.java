@@ -1,6 +1,6 @@
 package com.yuan.loveboot.system.service;
 
-import com.yuan.loveboot.system.query.SysAccountLoginQuery;
+import com.yuan.loveboot.system.dto.SysAccountLoginDTO;
 import com.yuan.loveboot.system.vo.SysUserTokenVO;
 
 /**
@@ -14,7 +14,7 @@ public interface SysAuthService {
      *
      * @param login 登录信息
      */
-    SysUserTokenVO loginByAccount(SysAccountLoginQuery login);
+    SysUserTokenVO loginByAccount(SysAccountLoginDTO login);
 
 
     /**

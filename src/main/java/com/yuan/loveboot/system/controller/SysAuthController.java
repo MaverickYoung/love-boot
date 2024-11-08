@@ -1,6 +1,6 @@
 package com.yuan.loveboot.system.controller;
 
-import com.yuan.loveboot.system.query.SysAccountLoginQuery;
+import com.yuan.loveboot.system.dto.SysAccountLoginDTO;
 import com.yuan.loveboot.system.service.SysAuthService;
 import com.yuan.loveboot.system.service.SysCaptchaService;
 import com.yuan.loveboot.system.service.SysUserTokenService;
@@ -44,7 +44,7 @@ public class SysAuthController {
 
     @PostMapping("login")
     @Operation(summary = "账号密码登录")
-    public Result<SysUserTokenVO> login(@RequestBody SysAccountLoginQuery login) {
+    public Result<SysUserTokenVO> login(@RequestBody SysAccountLoginDTO login) {
         SysUserTokenVO token = sysAuthService.loginByAccount(login);
 
         return Result.ok(token);

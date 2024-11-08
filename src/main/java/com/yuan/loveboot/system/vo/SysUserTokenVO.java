@@ -18,11 +18,11 @@ public class SysUserTokenVO implements Serializable {
     @Serial
     private static final long serialVersionUID = 4246693017782474565L;
 
-    @Schema(description = "access_token")
-    @JsonProperty(value = "access_token")
+    @Schema(description = "访问令牌")
+    @JsonProperty(value = "accessToken")
     private String accessToken;
 
-    @Schema(description = "refresh_token")
-    @JsonProperty(value = "refresh_token")
+    @Schema(description = "刷新令牌")
+    @JsonProperty(value = "refreshToken")
     private String refreshToken;
 }

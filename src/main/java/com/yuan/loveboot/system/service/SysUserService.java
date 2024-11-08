@@ -1,10 +1,11 @@
 package com.yuan.loveboot.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yuan.loveboot.system.entiy.SysUser;
-import com.yuan.loveboot.system.vo.SysUserAvatarVO;
-import com.yuan.loveboot.system.vo.SysUserBaseVO;
-import com.yuan.loveboot.system.vo.SysUserPasswordVO;
+import com.yuan.loveboot.system.dto.SysUserAvatarDTO;
+import com.yuan.loveboot.system.dto.SysUserBaseDTO;
+import com.yuan.loveboot.system.dto.SysUserDTO;
+import com.yuan.loveboot.system.dto.SysUserPasswordDTO;
+import com.yuan.loveboot.system.po.SysUser;
 import com.yuan.loveboot.system.vo.SysUserVO;
 
 /**
@@ -13,23 +14,23 @@ import com.yuan.loveboot.system.vo.SysUserVO;
  * @author Maverick
  */
 public interface SysUserService extends IService<SysUser> {
-    void save(SysUserVO vo);
+    void save(SysUserDTO dto);
 
-    void update(SysUserBaseVO vo);
+    void update(SysUserBaseDTO dto);
 
-    void updateAvatar(SysUserAvatarVO avatar);
+    void updateAvatar(SysUserAvatarDTO avatar);
 
     /**
      * 更新密码
      *
-     * @param vo 修改信息
+     * @param dto 修改信息
      */
-    void updatePassword(SysUserPasswordVO vo);
+    void updatePassword(SysUserPasswordDTO dto);
 
     /**
      * 获取当前用户的信息
      *
      * @return 用户信息
      */
-    SysUserBaseVO getUser();
+    SysUserVO getUser();
 }

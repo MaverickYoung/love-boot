@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.yuan.loveboot.crypto.AesPasswordEncoder;
 import com.yuan.loveboot.exception.ServerException;
-import com.yuan.loveboot.system.entiy.SysUser;
-import com.yuan.loveboot.system.query.SysAccountLoginQuery;
+import com.yuan.loveboot.system.dto.SysAccountLoginDTO;
+import com.yuan.loveboot.system.po.SysUser;
 import com.yuan.loveboot.system.service.*;
 import com.yuan.loveboot.system.vo.SysUserTokenVO;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class SysAuthServiceImpl implements SysAuthService {
 
 
     @Override
-    public SysUserTokenVO loginByAccount(SysAccountLoginQuery login) {
+    public SysUserTokenVO loginByAccount(SysAccountLoginDTO login) {
         // 验证码效验
         boolean flag = sysCaptchaService.validate(login.getKey(), login.getCaptcha());
         if (!flag) {

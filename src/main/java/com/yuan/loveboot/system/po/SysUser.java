@@ -1,4 +1,4 @@
-package com.yuan.loveboot.system.entiy;
+package com.yuan.loveboot.system.po;
 
 import com.yuan.loveboot.mybatis.entity.BaseEntity;
 import lombok.Data;

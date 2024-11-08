@@ -1,6 +1,6 @@
 package com.yuan.loveboot.system.convert;
 
-import com.yuan.loveboot.system.entiy.SysUserToken;
+import com.yuan.loveboot.system.po.SysUserToken;
 import com.yuan.loveboot.system.vo.SysUserTokenVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

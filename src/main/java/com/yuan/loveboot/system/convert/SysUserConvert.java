@@ -1,7 +1,8 @@
 package com.yuan.loveboot.system.convert;
 
-import com.yuan.loveboot.system.entiy.SysUser;
-import com.yuan.loveboot.system.vo.SysUserBaseVO;
+import com.yuan.loveboot.system.dto.SysUserBaseDTO;
+import com.yuan.loveboot.system.dto.SysUserDTO;
+import com.yuan.loveboot.system.po.SysUser;
 import com.yuan.loveboot.system.vo.SysUserVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -11,9 +12,9 @@ import org.mapstruct.factory.Mappers;
 public interface SysUserConvert {
     SysUserConvert INSTANCE = Mappers.getMapper(SysUserConvert.class);
 
-    SysUserBaseVO convert(SysUser entity);
+    SysUserVO convert(SysUser entity);
 
-    SysUser convert(SysUserVO vo);
+    SysUser convert(SysUserDTO dto);
 
-    SysUser convert(SysUserBaseVO vo);
+    SysUser convert(SysUserBaseDTO dto);
 }

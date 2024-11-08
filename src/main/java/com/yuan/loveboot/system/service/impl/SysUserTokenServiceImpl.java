@@ -8,7 +8,7 @@ import com.yuan.loveboot.mybatis.service.impl.BaseServiceImpl;
 import com.yuan.loveboot.properties.SecurityProperties;
 import com.yuan.loveboot.system.convert.SysUserTokenConvert;
 import com.yuan.loveboot.system.dao.SysUserTokenDao;
-import com.yuan.loveboot.system.entiy.SysUserToken;
+import com.yuan.loveboot.system.po.SysUserToken;
 import com.yuan.loveboot.system.service.SysCacheService;
 import com.yuan.loveboot.system.service.SysUserTokenService;
 import com.yuan.loveboot.system.vo.SysUserTokenVO;

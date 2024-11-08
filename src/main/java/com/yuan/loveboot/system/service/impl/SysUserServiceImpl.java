@@ -7,12 +7,13 @@ import com.yuan.loveboot.exception.ServerException;
 import com.yuan.loveboot.mybatis.service.impl.BaseServiceImpl;
 import com.yuan.loveboot.system.convert.SysUserConvert;
 import com.yuan.loveboot.system.dao.SysUserDao;
-import com.yuan.loveboot.system.entiy.SysUser;
+import com.yuan.loveboot.system.dto.SysUserAvatarDTO;
+import com.yuan.loveboot.system.dto.SysUserBaseDTO;
+import com.yuan.loveboot.system.dto.SysUserDTO;
+import com.yuan.loveboot.system.dto.SysUserPasswordDTO;
+import com.yuan.loveboot.system.po.SysUser;
 import com.yuan.loveboot.system.service.SysCacheService;
 import com.yuan.loveboot.system.service.SysUserService;
-import com.yuan.loveboot.system.vo.SysUserAvatarVO;
-import com.yuan.loveboot.system.vo.SysUserBaseVO;
-import com.yuan.loveboot.system.vo.SysUserPasswordVO;
 import com.yuan.loveboot.system.vo.SysUserVO;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -31,8 +32,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUser> imp
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void save(SysUserVO vo) {
-        SysUser entity = SysUserConvert.INSTANCE.convert(vo);
+    public void save(SysUserDTO dto) {
+        SysUser entity = SysUserConvert.INSTANCE.convert(dto);
 
         // 判断用户名是否存在
         SysUser user = baseMapper.getByUsername(entity.getUsername());
@@ -48,8 +49,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUser> imp
     }
 
     @Override
-    public void update(SysUserBaseVO vo) {
-        SysUser entity = SysUserConvert.INSTANCE.convert(vo);
+    public void update(SysUserBaseDTO dto) {
+        SysUser entity = SysUserConvert.INSTANCE.convert(dto);
 
         // 判断用户名是否存在
         SysUser user = baseMapper.getByUsername(entity.getUsername());
@@ -64,7 +65,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUser> imp
 
 
     @Override
-    public void updateAvatar(SysUserAvatarVO avatar) {
+    public void updateAvatar(SysUserAvatarDTO avatar) {
         SysUser entity = new SysUser();
         entity.setId(sysCacheService.getUserId());
         entity.setAvatar(avatar.getAvatar());
@@ -72,9 +73,9 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUser> imp
     }
 
     @Override
-    public void updatePassword(SysUserPasswordVO vo) {
-        String password = AesPasswordEncoder.encode(vo.getPassword());
-        String newPassword = AesPasswordEncoder.encode(vo.getNewPassword());
+    public void updatePassword(SysUserPasswordDTO dto) {
+        String password = AesPasswordEncoder.encode(dto.getPassword());
+        String newPassword = AesPasswordEncoder.encode(dto.getNewPassword());
         if (password.equals(newPassword)) {
             throw new ServerException("新旧密码不能相同");
         }
@@ -94,7 +95,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUser> imp
     }
 
     @Override
-    public SysUserBaseVO getUser() {
+    public SysUserVO getUser() {
         SysUser user = getById(sysCacheService.getUserId());
         return SysUserConvert.INSTANCE.convert(user);
     }

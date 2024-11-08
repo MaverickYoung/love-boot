@@ -1,4 +1,4 @@
-package com.yuan.loveboot.system.vo;
+package com.yuan.loveboot.system.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 @Data
 @Schema(description = "用户头像")
-public class SysUserAvatarVO implements Serializable {
+public class SysUserAvatarDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = -5156974101004685754L;
 

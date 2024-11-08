@@ -1,4 +1,4 @@
-package com.yuan.loveboot.system.entiy;
+package com.yuan.loveboot.system.po;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
