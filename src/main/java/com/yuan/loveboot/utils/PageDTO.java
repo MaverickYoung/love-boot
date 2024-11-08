@@ -12,17 +12,17 @@ import lombok.Data;
  * @author Maverick
  */
 @Data
-public class Query {
+public class PageDTO {
     @NotNull(message = "页码不能为空")
     @Min(value = 1, message = "页码最小值为 1")
     @Schema(description = "当前页码")
-    Integer page;
+    int page;
 
     @NotNull(message = "每页条数不能为空")
     @Min(value = 1, message = "每页条数不小于1")
     @Max(value = 1000, message = "每页条数不大于1000")
     @Schema(description = "每页条数")
-    Integer limit;
+    int limit;
 
     @Schema(description = "排序字段")
     String order;

@@ -31,12 +31,10 @@ public class FieldMetaObjectHandler implements MetaObjectHandler {
         LocalDateTime now = LocalDateTime.now();
 
         // 用户字段填充
-        if (userId != null) {
-            // 创建者
-            setFieldValByName(CREATOR, userId, metaObject);
-            // 更新者
-            setFieldValByName(UPDATER, userId, metaObject);
-        }
+        // 创建者
+        setFieldValByName(CREATOR, userId, metaObject);
+        // 更新者
+        setFieldValByName(UPDATER, userId, metaObject);
 
         // 创建时间
         setFieldValByName(CREATE_TIME, now, metaObject);

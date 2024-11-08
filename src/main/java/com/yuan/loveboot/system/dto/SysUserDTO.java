@@ -30,7 +30,7 @@ public class SysUserDTO implements Serializable {
     private String avatar;
 
     @Schema(description = "性别")
-    private Integer gender;
+    private int gender;
 
     @Schema(description = "昵称")
     @OptionalSize(min = 1, max = 50, message = "昵称不合规")

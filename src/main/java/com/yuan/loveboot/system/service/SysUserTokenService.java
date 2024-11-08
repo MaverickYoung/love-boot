@@ -17,7 +17,7 @@ public interface SysUserTokenService extends BaseService<SysUserToken> {
      * @param userId 用户ID
      * @return 用户Token
      */
-    SysUserTokenVO createToken(Integer userId);
+    SysUserTokenVO createToken(int userId);
 
     /**
      * 根据RefreshToken，生成新Token
@@ -32,6 +32,6 @@ public interface SysUserTokenService extends BaseService<SysUserToken> {
      *
      * @param userId 用户ID
      */
-    void expireToken(Integer userId);
+    void expireToken(int userId);
 
 }

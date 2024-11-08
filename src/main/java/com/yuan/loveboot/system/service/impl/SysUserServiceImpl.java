@@ -36,7 +36,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUser> imp
         SysUser entity = SysUserConvert.INSTANCE.convert(dto);
 
         // 判断用户名是否存在
-        SysUser user = baseMapper.getByUsername(entity.getUsername());
+        SysUser user = baseMapper.selectByUsername(entity.getUsername());
         if (user != null) {
             throw new ServerException("用户名已经存在");
         }
@@ -53,7 +53,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUser> imp
         SysUser entity = SysUserConvert.INSTANCE.convert(dto);
 
         // 判断用户名是否存在
-        SysUser user = baseMapper.getByUsername(entity.getUsername());
+        SysUser user = baseMapper.selectByUsername(entity.getUsername());
         if (user != null) {
             throw new ServerException("用户名已经存在");
         }

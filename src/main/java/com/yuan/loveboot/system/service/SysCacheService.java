@@ -12,7 +12,7 @@ public interface SysCacheService {
      * @param userId      用户ID
      * @param accessToken 访问令牌
      */
-    void cacheAccessToken(Integer userId, String accessToken);
+    void cacheAccessToken(int userId, String accessToken);
 
     /**
      * 通过请求头中的 访问令牌 获取用户ID
@@ -26,7 +26,7 @@ public interface SysCacheService {
      *
      * @param userId 用户ID
      */
-    void deleteAccessToken(Integer userId);
+    void deleteAccessToken(int userId);
 
     /**
      * 缓存 验证码

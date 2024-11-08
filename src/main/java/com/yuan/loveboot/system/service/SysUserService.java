@@ -1,6 +1,6 @@
 package com.yuan.loveboot.system.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.yuan.loveboot.mybatis.service.BaseService;
 import com.yuan.loveboot.system.dto.SysUserAvatarDTO;
 import com.yuan.loveboot.system.dto.SysUserBaseDTO;
 import com.yuan.loveboot.system.dto.SysUserDTO;
@@ -13,7 +13,7 @@ import com.yuan.loveboot.system.vo.SysUserVO;
  *
  * @author Maverick
  */
-public interface SysUserService extends IService<SysUser> {
+public interface SysUserService extends BaseService<SysUser> {
     void save(SysUserDTO dto);
 
     void update(SysUserBaseDTO dto);

@@ -29,7 +29,7 @@ public class SysUserTokenServiceImpl extends BaseServiceImpl<SysUserTokenDao, Sy
     private final SysCacheService sysCacheService;
 
     @Override
-    public SysUserTokenVO createToken(Integer userId) {
+    public SysUserTokenVO createToken(int userId) {
         // 生成token
         // UUID去除连字符
         String accessToken = TokenUtil.generate();
@@ -89,7 +89,7 @@ public class SysUserTokenServiceImpl extends BaseServiceImpl<SysUserTokenDao, Sy
     }
 
     @Override
-    public void expireToken(Integer userId) {
+    public void expireToken(int userId) {
         SysUserToken entity = new SysUserToken();
 
         sysCacheService.deleteAccessToken(entity.getUserId());

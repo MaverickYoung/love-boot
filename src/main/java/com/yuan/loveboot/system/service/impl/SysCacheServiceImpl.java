@@ -23,7 +23,7 @@ public class SysCacheServiceImpl implements SysCacheService {
     private final HttpServletRequest request;
 
     @Override
-    public void cacheAccessToken(Integer userId, String accessToken) {
+    public void cacheAccessToken(int userId, String accessToken) {
         Objects.requireNonNull(cacheManager.getCache(CacheConfig.ACCESS_TOKEN_KEY)).put(accessToken, userId);
     }
 
@@ -44,7 +44,7 @@ public class SysCacheServiceImpl implements SysCacheService {
     }
 
     @Override
-    public void deleteAccessToken(Integer userId) {
+    public void deleteAccessToken(int userId) {
         Objects.requireNonNull(cacheManager.getCache(CacheConfig.ACCESS_TOKEN_KEY)).evict(userId);
     }
 

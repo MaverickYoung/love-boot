@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface SysUserDao extends BaseDao<SysUser> {
-    default SysUser getByUsername(String username) {
+    default SysUser selectByUsername(String username) {
         return this.selectOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, username));
     }
 }

@@ -18,7 +18,7 @@ public class SysUserVO implements Serializable {
     private static final long serialVersionUID = -5139478644603483246L;
 
     @Schema(description = "用户ID")
-    private Integer id;
+    private int id;
 
     @Schema(description = "用户名")
     private String username;
@@ -27,7 +27,7 @@ public class SysUserVO implements Serializable {
     private String avatar;
 
     @Schema(description = "性别")
-    private Integer gender;
+    private int gender;
 
     @Schema(description = "昵称")
     private String nickname;
