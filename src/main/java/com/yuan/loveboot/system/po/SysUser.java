@@ -1,6 +1,6 @@
 package com.yuan.loveboot.system.po;
 
-import com.yuan.loveboot.mybatis.entity.BaseEntity;
+import com.yuan.loveboot.mybatis.po.BasePO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class SysUser extends BaseEntity {
+public class SysUser extends BasePO {
     /**
      * 用户名
      */

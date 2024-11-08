@@ -1,4 +1,4 @@
-package com.yuan.loveboot.mybatis.entity;
+package com.yuan.loveboot.mybatis.po;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * @author Maverick
  */
 @Data
-public abstract class BaseEntity{
+public abstract class BasePO {
     /**
      * id
      */
