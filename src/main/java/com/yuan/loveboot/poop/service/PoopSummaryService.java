@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface PoopSummaryService extends BaseService<PoopSummary> {
     /**
-     * 统计上月用户便便日志数量，并插入或更新统计记录。
+     * 统计上月用户便便数量，并插入或更新统计记录。
      */
     void syncLastMonthPoopStatistics();
 
@@ -23,6 +23,11 @@ public interface PoopSummaryService extends BaseService<PoopSummary> {
      * 更新上月冠军用户标记。
      */
     void updateLastMonthWinners();
+
+    /**
+     * 每月第一天自动执行上月用户便便统计并更新上月冠军用户标记。
+     */
+    void syncLastMonthPoopStatisticsScheduled();
 
     /**
      * 获取指定月份范围的用户的便便统计信息。
@@ -35,8 +40,8 @@ public interface PoopSummaryService extends BaseService<PoopSummary> {
     /**
      * 更新奖励领取状态和图片。
      *
-     * @param imageBytes  奖励图片
-     * @param month 年月（格式：YYYY-MM）
+     * @param imageBytes 奖励图片
+     * @param month      年月（格式：YYYY-MM）
      */
     void updateReward(byte[] imageBytes, YearMonth month);
 }

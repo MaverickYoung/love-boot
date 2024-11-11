@@ -15,6 +15,7 @@ import com.yuan.loveboot.system.service.SysCacheService;
 import com.yuan.loveboot.utils.FileUtil;
 import com.yuan.loveboot.utils.YearMonthRange;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,6 +70,15 @@ public class PoopSummaryServiceImpl extends BaseServiceImpl<PoopSummaryDao, Poop
 
         // 执行更新
         baseMapper.update(null, updateWrapper);
+    }
+
+
+    @Scheduled(cron = "0 0 0 1 * ?")
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void syncLastMonthPoopStatisticsScheduled() {
+        syncLastMonthPoopStatistics();
+        updateLastMonthWinners();
     }
 
     @Override
