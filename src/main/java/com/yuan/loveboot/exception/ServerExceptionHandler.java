@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import java.time.format.DateTimeParseException;
+
 
 /**
  * 异常处理器
@@ -45,6 +47,14 @@ public class ServerExceptionHandler {
         FieldError fieldError = e.getFieldError();
         assert fieldError != null;
         return Result.error(ResponseCode.VALIDATION_ERROR);
+    }
+
+    /**
+     * 时间格式转化异常
+     */
+    @ExceptionHandler(DateTimeParseException.class)
+    public Result<String> handleBindException() {
+        return Result.error(ResponseCode.VALIDATION_ERROR.getCode(), "时间范围格式错误，请使用 YYYY-MM");
     }
 
     /**

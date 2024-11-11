@@ -5,7 +5,7 @@
 
 <mapper namespace="com.yuan.loveboot.poop.dao.PoopLogDao">
 
-    <select id="summaryList" resultType="com.yuan.loveboot.poop.po.PoopSummary">
+    <select id="countUserPoopMonthly" resultType="com.yuan.loveboot.poop.po.PoopSummary">
         SELECT
         to_char(log_time, 'YYYY-MM') AS month,
         user_id,
@@ -13,7 +13,7 @@
         FROM poop_log
         WHERE is_deleted = false
         <if test="startMonth != null and endMonth != null and startMonth == endMonth">
-            AND to_char(log_time, 'YYYY-MM') = #{startMonth}
+            AND log_time = to_date(#{startMonth}, 'YYYY-MM')
         </if>
         <if test=" startMonth != null and startMonth != endMonth">
             AND log_time &gt;= to_date(#{startMonth}, 'YYYY-MM')

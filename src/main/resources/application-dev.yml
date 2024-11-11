@@ -14,3 +14,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/db_love
     username: postgres
     password: y9C6ZEZWw7
+
+storage:
+  dir:
+    base: D:/projects/love/upload
+    reward: ${storage.dir.base}/image/reward

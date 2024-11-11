@@ -8,7 +8,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * 用户
+ * 用户信息
  *
  * @author Maverick
  */

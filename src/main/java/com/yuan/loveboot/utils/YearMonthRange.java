@@ -1,6 +1,7 @@
 package com.yuan.loveboot.utils;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.YearMonth;
@@ -11,22 +12,41 @@ import java.time.YearMonth;
  * @author Maverick
  */
 @Data
+@AllArgsConstructor
 public class YearMonthRange {
 
     @Schema(description = "起始年月 YYYY-MM")
-    private YearMonth startMonth;
+    private YearMonth start;
 
     @Schema(description = "结束年月 YYYY-MM")
-    private YearMonth endMonth;
+    private YearMonth end;
 
+    /**
+     * 构造函数，接收起始和结束年月
+     *
+     * @param startMonth 起始年月 YYYY-MM
+     * @param endMonth   结束年月 YYYY-MM
+     */
     public YearMonthRange(String startMonth, String endMonth) {
-        this.startMonth = YearMonth.parse(startMonth);
-        this.endMonth = YearMonth.parse(endMonth);
+        this.start = YearMonth.parse(startMonth);
+        this.end = YearMonth.parse(endMonth);
     }
 
-    public static void main(String[] args) {
-        String startMonth1 = "2020";
-        String startMonth2 = "2021-10";
-        String startMonth3 = "2021-11";
+    /**
+     * 构造函数，接收相同的起始和结束年月
+     *
+     * @param month 年月
+     */
+    public YearMonthRange(String month) {
+        this(month, month);
+    }
+
+    /**
+     * 构造函数，接收 YearMonth 类型的起始和结束年月
+     *
+     * @param month 年月
+     */
+    public YearMonthRange(YearMonth month) {
+        this(month, month);
     }
 }

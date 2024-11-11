@@ -9,7 +9,7 @@ import com.yuan.loveboot.system.vo.SysUserTokenVO;
 import com.yuan.loveboot.utils.Result;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("sys/auth")
 @Tag(name = "认证管理")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SysAuthController {
     private final SysCaptchaService sysCaptchaService;
     private final SysAuthService sysAuthService;

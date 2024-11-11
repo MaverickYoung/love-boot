@@ -8,12 +8,12 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * 用户Token
+ * 用户令牌
  *
  * @author Maverick
  */
 @Data
-@Schema(description = "用户Token")
+@Schema(description = "用户令牌")
 public class SysUserTokenVO implements Serializable {
     @Serial
     private static final long serialVersionUID = 4246693017782474565L;

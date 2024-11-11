@@ -5,94 +5,31 @@
 
 <mapper namespace="com.yuan.loveboot.poop.dao.PoopSummaryDao">
 
-    <!-- 按月统计用户便便日志数量 -->
-    <insert id="calculateMonthlyPoopCount">
-        INSERT INTO poop_summary (month, user_id, poop_count, create_time, update_time)
-        SELECT
-            to_char(log_time, 'YYYY-MM') AS month,
-            user_id,
-            COUNT(*) AS poop_count,
-            NOW() AS create_time,
-            NOW() AS update_time
-        FROM poop_log
-        WHERE is_deleted = false
-        GROUP BY month, user_id
-        ON CONFLICT (month, user_id) DO UPDATE
-            SET poop_count = EXCLUDED.poop_count,
-                update_time = NOW();
-    </insert>
-
-    <!-- 更新当月冠军用户标记 -->
-    <update id="updateMonthlyWinners">
-        WITH ranked_users AS (SELECT month,
-                                     user_id,
-                                     poop_count,
-                                     RANK() OVER (PARTITION BY month ORDER BY poop_count DESC) AS rank
-                              FROM poop_summary
-                              WHERE is_deleted = false)
-        UPDATE poop_summary pls
-        SET is_winner   = true,
-            updater     = null,
-            update_time = NOW()
-        FROM ranked_users ru
-        WHERE pls.month = ru.month
-          AND pls.user_id = ru.user_id
-          AND ru.rank = 1;
-    </update>
-
-    <!-- 查询指定月份的所有冠军用户 -->
-    <select id="selectMonthlyWinners" resultType="com.yuan.loveboot.poop.po.PoopSummary">
-        SELECT
-            id,
-            month,
-            user_id,
-            poop_count,
-            is_winner,
-            is_rewarded,
-            reward_image,
-            version,
-            is_deleted,
-            creator,
-            create_time,
-            updater,
-            update_time
+    <select id="selectUserWithMaxPoopCount" resultType="integer">
+        SELECT user_id
         FROM poop_summary
-        WHERE month = #{month}
-          AND is_winner = true
-          AND is_deleted = false;
+        WHERE month = to_char(#{month}, 'YYYY-MM')
+          AND is_deleted = false
+          AND poop_count = (SELECT MAX(poop_count)
+                            FROM poop_summary
+                            WHERE month = to_char(#{month}, 'YYYY-MM')
+                              AND is_deleted = false);
     </select>
 
-    <!-- 查询指定用户在某个月的统计信息 -->
-    <select id="selectUserSummaryByMonth" resultType="com.example.entity.PoopLogSummary">
-        SELECT
-            id,
-            month,
-            user_id,
-            poop_count,
-            is_winner,
-            is_rewarded,
-            reward_image,
-            version,
-            is_deleted,
-            creator,
-            create_time,
-            updater,
-            update_time
-        FROM poop_summary
-        WHERE user_id = #{userId}
-          AND month = #{month}
-          AND is_deleted = false;
+    <select id="selectPoopSummaryByMonth" resultType="com.yuan.loveboot.poop.vo.UserStatsVO">
+        SELECT p.user_id, u.nickname, p.poop_count, p.is_winner
+        FROM poop_summary p
+        JOIN sys_user u ON p.user_id = u.id
+        WHERE p.month = #{month}
+        AND p.is_deleted = false
+        <if test="startMonth != null and endMonth != null and startMonth == endMonth">
+            p.month = to_date(#{startMonth}, 'YYYY-MM')
+        </if>
+        <if test=" startMonth != null and startMonth != endMonth">
+            AND p.month &gt;= to_date(#{startMonth}, 'YYYY-MM')
+        </if>
+        <if test=" startMonth != null and startMonth != endMonth ">
+            AND p.month &lt;= to_date(#{endMonth}, 'YYYY-MM')
+        </if>;
     </select>
-
-    <!-- 更新用户的奖品领取状态 -->
-    <update id="updateRewardStatus">
-        UPDATE poop_summary
-        SET is_rewarded = true,
-            reward_image = #{rewardImage},
-            update_time = NOW()
-        WHERE user_id = #{userId}
-          AND month = #{month}
-          AND is_deleted = false;
-    </update>
-
 </mapper>

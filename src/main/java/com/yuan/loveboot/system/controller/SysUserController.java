@@ -10,7 +10,7 @@ import com.yuan.loveboot.utils.Result;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("sys/user")
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Tag(name = "用户管理")
 public class SysUserController {
     private final SysUserService sysUserService;

@@ -2,7 +2,10 @@ package com.yuan.loveboot.poop.service;
 
 import com.yuan.loveboot.mybatis.service.BaseService;
 import com.yuan.loveboot.poop.po.PoopSummary;
+import com.yuan.loveboot.poop.vo.UserStatsVO;
+import com.yuan.loveboot.utils.YearMonthRange;
 
+import java.time.YearMonth;
 import java.util.List;
 
 /**
@@ -12,37 +15,28 @@ import java.util.List;
  */
 public interface PoopSummaryService extends BaseService<PoopSummary> {
     /**
-     * 按月统计用户便便日志数量，并插入或更新统计记录。
+     * 统计上月用户便便日志数量，并插入或更新统计记录。
      */
-    void calculateMonthlyPoopCount();
+    void syncLastMonthPoopStatistics();
 
     /**
-     * 更新当月冠军用户标记。
+     * 更新上月冠军用户标记。
      */
-    void updateMonthlyWinners();
+    void updateLastMonthWinners();
 
     /**
-     * 查询指定月份的所有冠军用户。
+     * 获取指定月份范围的用户的便便统计信息。
      *
+     * @param range 查询范围
+     * @return 统计结果
+     */
+    List<UserStatsVO> findPoopSummaryByMonth(YearMonthRange range);
+
+    /**
+     * 更新奖励领取状态和图片。
+     *
+     * @param imageBytes  奖励图片
      * @param month 年月（格式：YYYY-MM）
-     * @return 冠军用户列表
      */
-    List<PoopSummary> findMonthlyWinners(String month);
-
-    /**
-     * 查询指定用户在某个月的统计信息。
-     *
-     * @param userId 用户 ID
-     * @param month  年月（格式：YYYY-MM）
-     * @return 用户的统计信息
-     */
-    PoopSummary findUserSummaryByMonth(int userId, String month);
-
-    /**
-     * 更新用户的奖品领取状态。
-     *
-     * @param userId 用户 ID
-     * @param month  年月（格式：YYYY-MM）
-     */
-    void updateRewardStatus(int userId, String month);
+    void updateReward(byte[] imageBytes, YearMonth month);
 }

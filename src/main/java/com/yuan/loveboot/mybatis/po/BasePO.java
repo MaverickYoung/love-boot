@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 public abstract class BasePO {
     /**
-     * id
+     * ID
      */
     @TableId
     private Integer id;

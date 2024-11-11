@@ -5,10 +5,10 @@ import com.yuan.loveboot.poop.dao.PoopLogDao;
 import com.yuan.loveboot.poop.po.PoopLog;
 import com.yuan.loveboot.poop.po.PoopSummary;
 import com.yuan.loveboot.poop.service.PoopLogService;
+import com.yuan.loveboot.utils.YearMonthRange;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.YearMonth;
 import java.util.List;
 
 /**
@@ -20,12 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PoopLogServiceImpl extends BaseServiceImpl<PoopLogDao, PoopLog> implements PoopLogService {
     @Override
-    public List<PoopSummary> summaryList(YearMonth startMonth, YearMonth endMonth) {
-        return baseMapper.summaryList(startMonth, endMonth);
-    }
-
-    @Override
-    public List<PoopSummary> summaryList() {
-        return List.of();
+    public List<PoopSummary> countUserPoopMonthly(YearMonthRange range) {
+        return baseMapper.countUserPoopMonthly(range);
     }
 }
