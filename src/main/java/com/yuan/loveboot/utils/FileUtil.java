@@ -150,20 +150,6 @@ public class FileUtil {
         }
     }
 
-
-    /**
-     * 生成文件名
-     *
-     * @param month     年月 (格式 YYYY-MM)
-     * @param userId    用户 ID
-     * @param extension 文件拓展名
-     * @return 规范化后的文件名
-     */
-    public static String generateFileName(String month, int userId, String extension) {
-        long timestamp = Instant.now().getEpochSecond();
-        return String.format("%s_%d_%d.%s", month, userId, timestamp, extension);
-    }
-
     /**
      * 获取文件扩展名
      *
