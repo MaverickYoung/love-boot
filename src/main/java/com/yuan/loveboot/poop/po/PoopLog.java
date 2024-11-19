@@ -17,7 +17,7 @@ public class PoopLog extends BasePO {
     /**
      * 用户ID
      */
-    private Integer userID;
+    private Integer userId;
     /**
      * 记录时间
      */
@@ -25,5 +25,5 @@ public class PoopLog extends BasePO {
     /**
      * 便便类型
      */
-    private Integer poop_type;
+    private Integer poopType;
 }

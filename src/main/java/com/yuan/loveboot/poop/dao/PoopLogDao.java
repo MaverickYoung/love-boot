@@ -6,6 +6,7 @@ import com.yuan.loveboot.poop.po.PoopSummary;
 import com.yuan.loveboot.utils.YearMonthRange;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.time.YearMonth;
 import java.util.List;
 
 /**
@@ -21,5 +22,14 @@ public interface PoopLogDao extends BaseDao<PoopLog> {
      * @param range 查询范围
      * @return 统计结果
      */
-    List<PoopSummary> countUserPoopMonthly(YearMonthRange range);
+    List<PoopSummary> countByMonth(YearMonthRange range);
+
+    /**
+     * 统计存在的月份
+     *
+     * @return 统计结果
+     */
+    List<YearMonth> selectDistinctMonths();
+
+
 }

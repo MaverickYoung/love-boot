@@ -4,7 +4,7 @@ create table sys_user
     username    varchar(50)  not null,
     password    varchar(100) not null,
     nickname    varchar(50)  not null,
-    avatar      varchar(200),
+    avatar      varchar(200) not null,
     gender      int          not null,
     version     int          not null default 0,
     is_deleted  boolean      not null default false,
@@ -21,7 +21,7 @@ comment on column sys_user.id is 'id';
 comment on column sys_user.username is '用户名';
 comment on column sys_user.password is '密码';
 comment on column sys_user.nickname is '昵称';
-comment on column sys_user.avatar is '头像';
+comment on column sys_user.avatar is '头像，base64';
 comment on column sys_user.gender is '性别';
 comment on column sys_user.version is '版本号';
 comment on column sys_user.is_deleted is '是否删除';

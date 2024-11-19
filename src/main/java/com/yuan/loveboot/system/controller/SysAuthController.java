@@ -9,6 +9,7 @@ import com.yuan.loveboot.system.vo.SysUserTokenVO;
 import com.yuan.loveboot.utils.Result;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +45,7 @@ public class SysAuthController {
 
     @PostMapping("login")
     @Operation(summary = "账号密码登录")
-    public Result<SysUserTokenVO> login(@RequestBody SysAccountLoginDTO login) {
+    public Result<SysUserTokenVO> login(@RequestBody @Valid SysAccountLoginDTO login) {
         SysUserTokenVO token = sysAuthService.loginByAccount(login);
 
         return Result.ok(token);
@@ -52,8 +53,8 @@ public class SysAuthController {
 
     @PostMapping("token")
     @Operation(summary = "获取 访问令牌")
-    public Result<String> token(String refreshToken) {
-        String token = sysUserTokenService.refreshToken(refreshToken);
+    public Result<SysUserTokenVO> token(String refreshToken) {
+        SysUserTokenVO token = sysUserTokenService.refreshToken(refreshToken);
 
         return Result.ok(token);
     }

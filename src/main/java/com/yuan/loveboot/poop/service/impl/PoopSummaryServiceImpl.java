@@ -6,11 +6,13 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.yuan.loveboot.enums.ResponseCode;
 import com.yuan.loveboot.exception.ServerException;
 import com.yuan.loveboot.mybatis.service.impl.BaseServiceImpl;
+import com.yuan.loveboot.poop.convert.PoopSummaryConvert;
 import com.yuan.loveboot.poop.dao.PoopSummaryDao;
 import com.yuan.loveboot.poop.po.PoopSummary;
 import com.yuan.loveboot.poop.service.PoopLogService;
 import com.yuan.loveboot.poop.service.PoopSummaryService;
-import com.yuan.loveboot.poop.vo.UserStatsVO;
+import com.yuan.loveboot.poop.vo.PoopRewardVO;
+import com.yuan.loveboot.poop.vo.PoopSummaryVO;
 import com.yuan.loveboot.system.service.SysCacheService;
 import com.yuan.loveboot.utils.FileUtil;
 import com.yuan.loveboot.utils.YearMonthRange;
@@ -18,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.YearMonth;
 import java.util.List;
@@ -40,7 +43,7 @@ public class PoopSummaryServiceImpl extends BaseServiceImpl<PoopSummaryDao, Poop
         YearMonth lastMonth = YearMonth.now().minusMonths(1);
 
         // 统计上个月用户便便数量
-        List<PoopSummary> poopSummaries = poopLogService.countUserPoopMonthly(new YearMonthRange(lastMonth));
+        List<PoopSummary> poopSummaries = poopLogService.countByMonth(new YearMonthRange(lastMonth));
 
         // 批量插入或更新
         this.saveOrUpdateBatch(poopSummaries);
@@ -82,12 +85,37 @@ public class PoopSummaryServiceImpl extends BaseServiceImpl<PoopSummaryDao, Poop
     }
 
     @Override
-    public List<UserStatsVO> findPoopSummaryByMonth(YearMonthRange range) {
-        return baseMapper.selectPoopSummaryByMonth(range);
+    public List<PoopSummaryVO> findByMonth(YearMonthRange range) {
+        LambdaQueryWrapper<PoopSummary> query = Wrappers.lambdaQuery();
+        YearMonth start = range.getStart();
+        YearMonth end = range.getEnd();
+
+        if (start != null && start.equals(end)) {
+            query.eq(PoopSummary::getMonth, start);
+        }
+        if (start != null && !start.equals(end)) {
+            query.ge(PoopSummary::getMonth, start);
+        }
+        if (end != null && !end.equals(start)) {
+            query.le(PoopSummary::getMonth, end);
+        }
+
+        List<PoopSummary> list = baseMapper.selectList(query);
+        return PoopSummaryConvert.INSTANCE.convert(list);
     }
 
     @Override
-    public void updateReward(byte[] imageBytes, YearMonth month) {
+    public List<PoopRewardVO> findRewardByMonth(YearMonth month) {
+        LambdaQueryWrapper<PoopSummary> query = Wrappers.lambdaQuery();
+        query.eq(PoopSummary::getMonth, month);
+        query.eq(PoopSummary::getIsWinner, true);
+
+        List<PoopSummary> list = baseMapper.selectList(query);
+        return PoopSummaryConvert.INSTANCE.convertReward(list);
+    }
+
+    @Override
+    public void updateReward(MultipartFile file, YearMonth month) {
         Integer userId = sysCacheService.getUserId();
         if (userId == null) {
             throw new ServerException(ResponseCode.ACCESS_TOKEN_INVALID);
@@ -103,7 +131,7 @@ public class PoopSummaryServiceImpl extends BaseServiceImpl<PoopSummaryDao, Poop
         }
 
         // 保存奖励图片
-        String imageName = fileUtil.saveRewardImage(imageBytes, month.toString(), userId);
+        String imageName = fileUtil.saveRewardImage(file, month.toString(), userId);
 
         // 更新奖励图片和状态
         poopSummary.setRewardImage(imageName);

@@ -1,5 +1,6 @@
 package com.yuan.loveboot.system.po;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.yuan.loveboot.mybatis.po.BasePO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,6 +21,7 @@ public class SysUser extends BasePO {
     /**
      * 密码
      */
+    @TableField(select = false)
     private String password;
 
     /**
@@ -28,7 +30,7 @@ public class SysUser extends BasePO {
     private String nickname;
 
     /**
-     * 头像
+     * 头像，base64
      */
     private String avatar;
 

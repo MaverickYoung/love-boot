@@ -36,14 +36,18 @@ public class Result<T> {
     }
 
     public static <T> Result<T> error(String msg) {
-        return error(ResponseCode.CUSTOM_ERROR.getCode(), msg);
+        return error(ResponseCode.CUSTOM_ERROR, msg);
     }
 
     public static <T> Result<T> error(ResponseCode responseCode) {
-        return error(responseCode.getCode(), responseCode.getMsg());
+        return error(responseCode, responseCode.getMsg());
     }
 
     public static <T> Result<T> error(int code, String msg) {
         return new Result<T>().setCode(code).setMsg(msg);
+    }
+
+    public static <T> Result<T> error(ResponseCode responseCode, String msg) {
+        return error(responseCode.getCode(), msg);
     }
 }

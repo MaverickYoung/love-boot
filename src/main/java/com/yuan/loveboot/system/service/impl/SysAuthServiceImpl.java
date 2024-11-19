@@ -31,9 +31,10 @@ public class SysAuthServiceImpl implements SysAuthService {
             throw new ServerException("验证码错误");
         }
 
+        String password = AesPasswordEncoder.encode(login.getPassword());
+
         LambdaQueryWrapper<SysUser> query = Wrappers.lambdaQuery();
         query.eq(SysUser::getUsername, login.getUsername());
-        String password = AesPasswordEncoder.encode(login.getPassword());
         query.eq(SysUser::getPassword, password);
         SysUser user = sysUserService.getOne(query);
 

@@ -16,12 +16,11 @@
                               AND is_deleted = false);
     </select>
 
-    <select id="selectPoopSummaryByMonth" resultType="com.yuan.loveboot.poop.vo.UserStatsVO">
+    <select id="selectWithNicknameByMonth" resultType="com.yuan.loveboot.poop.vo.PoopSummaryVO">
         SELECT p.user_id, u.nickname, p.poop_count, p.is_winner
         FROM poop_summary p
         JOIN sys_user u ON p.user_id = u.id
-        WHERE p.month = #{month}
-        AND p.is_deleted = false
+        WHERE p.is_deleted = false
         <if test="startMonth != null and endMonth != null and startMonth == endMonth">
             p.month = to_date(#{startMonth}, 'YYYY-MM')
         </if>

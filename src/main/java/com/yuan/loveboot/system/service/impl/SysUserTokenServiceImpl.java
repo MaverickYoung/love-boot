@@ -60,7 +60,7 @@ public class SysUserTokenServiceImpl extends BaseServiceImpl<SysUserTokenDao, Sy
     }
 
     @Override
-    public String refreshToken(String refreshToken) {
+    public SysUserTokenVO refreshToken(String refreshToken) {
         LocalDateTime now = LocalDateTime.now();
 
         LambdaQueryWrapper<SysUserToken> query = Wrappers.lambdaQuery();
@@ -77,15 +77,20 @@ public class SysUserTokenServiceImpl extends BaseServiceImpl<SysUserTokenDao, Sy
         sysCacheService.deleteAccessToken(entity.getUserId());
 
         // 生成新 accessToken
-        String accessToken = TokenUtil.generate();
-        entity.setAccessToken(accessToken);
+        SysUserTokenVO vo = new SysUserTokenVO();
+        vo.setAccessToken(TokenUtil.generate());
+        vo.setRefreshToken(TokenUtil.generate());
+
+        entity.setAccessToken(vo.getAccessToken());
         entity.setAccessTokenExpire(now.plusSeconds(SecurityProperties.ACCESS_TOKEN_EXPIRE));
+        entity.setRefreshToken(vo.getRefreshToken());
+        entity.setRefreshTokenExpire(now.plusSeconds(SecurityProperties.REFRESH_TOKEN_EXPIRE));
 
         // 更新
-        sysCacheService.cacheAccessToken(entity.getUserId(),accessToken);
+        sysCacheService.cacheAccessToken(entity.getUserId(), vo.getAccessToken());
         baseMapper.updateById(entity);
 
-        return accessToken;
+        return vo;
     }
 
     @Override

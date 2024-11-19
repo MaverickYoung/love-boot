@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
@@ -46,7 +47,15 @@ public class ServerExceptionHandler {
     public Result<String> bindException(BindException e) {
         FieldError fieldError = e.getFieldError();
         assert fieldError != null;
-        return Result.error(ResponseCode.VALIDATION_ERROR);
+        return Result.error(ResponseCode.VALIDATION_ERROR, fieldError.getDefaultMessage());
+    }
+
+    /**
+     * SpringMVC参数缺失
+     */
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public Result<String> missingParamException(MissingServletRequestParameterException e) {
+        return Result.error(ResponseCode.VALIDATION_ERROR, String.format("缺少必要请求参数 %s", e.getParameterName()));
     }
 
     /**
@@ -54,7 +63,7 @@ public class ServerExceptionHandler {
      */
     @ExceptionHandler(DateTimeParseException.class)
     public Result<String> handleBindException() {
-        return Result.error(ResponseCode.VALIDATION_ERROR.getCode(), "时间范围格式错误，请使用 YYYY-MM");
+        return Result.error(ResponseCode.VALIDATION_ERROR, "时间格式错误，请使用 YYYY-MM");
     }
 
     /**

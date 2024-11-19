@@ -2,7 +2,7 @@ package com.yuan.loveboot.poop.dao;
 
 import com.yuan.loveboot.mybatis.dao.BaseDao;
 import com.yuan.loveboot.poop.po.PoopSummary;
-import com.yuan.loveboot.poop.vo.UserStatsVO;
+import com.yuan.loveboot.poop.vo.PoopSummaryVO;
 import com.yuan.loveboot.utils.YearMonthRange;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -28,5 +28,5 @@ public interface PoopSummaryDao extends BaseDao<PoopSummary> {
      * @param range 查询范围
      * @return 统计结果
      */
-    List<UserStatsVO> selectPoopSummaryByMonth(YearMonthRange range);
+    List<PoopSummaryVO> selectWithNicknameByMonth(YearMonthRange range);
 }

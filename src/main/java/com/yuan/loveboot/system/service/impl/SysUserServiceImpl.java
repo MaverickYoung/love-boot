@@ -7,18 +7,24 @@ import com.yuan.loveboot.exception.ServerException;
 import com.yuan.loveboot.mybatis.service.impl.BaseServiceImpl;
 import com.yuan.loveboot.system.convert.SysUserConvert;
 import com.yuan.loveboot.system.dao.SysUserDao;
-import com.yuan.loveboot.system.dto.SysUserAvatarDTO;
 import com.yuan.loveboot.system.dto.SysUserBaseDTO;
 import com.yuan.loveboot.system.dto.SysUserDTO;
 import com.yuan.loveboot.system.dto.SysUserPasswordDTO;
 import com.yuan.loveboot.system.po.SysUser;
 import com.yuan.loveboot.system.service.SysCacheService;
 import com.yuan.loveboot.system.service.SysUserService;
+import com.yuan.loveboot.system.vo.SysUserProfileVO;
 import com.yuan.loveboot.system.vo.SysUserVO;
+import com.yuan.loveboot.utils.FileUtil;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * 用户管理
@@ -27,8 +33,24 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUser> implements SysUserService {
     private final SysCacheService sysCacheService;
+    private final FileUtil fileUtil;
+
+    // 从 application.yml 中读取默认头像路径
+    @Value("${storage.path.defaultAvatar}")
+    private String defaultAvatar;
+
+    @Override
+    public List<SysUserProfileVO> findByIds(List<Integer> idList) {
+        if (CollectionUtils.isEmpty(idList)) {
+            throw new ServerException("用户ID数组不能为空");
+        }
+        List<SysUser> list = baseMapper.selectByIds(idList);
+
+        return SysUserConvert.INSTANCE.convertProfile(list);
+    }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -41,8 +63,10 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUser> imp
             throw new ServerException("用户名已经存在");
         }
 
-        String password = StringUtils.isBlank(entity.getPassword()) ? null : AesPasswordEncoder.encode(entity.getPassword());
+        String password = AesPasswordEncoder.encode(entity.getPassword());
         entity.setPassword(password);
+
+        entity.setAvatar(defaultAvatar);
 
         // 保存用户
         baseMapper.insert(entity);
@@ -65,10 +89,13 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUser> imp
 
 
     @Override
-    public void updateAvatar(SysUserAvatarDTO avatar) {
+    public void updateAvatar(MultipartFile file) {
         SysUser entity = new SysUser();
-        entity.setId(sysCacheService.getUserId());
-        entity.setAvatar(avatar.getAvatar());
+        int userId = sysCacheService.getUserId();
+        String avatar = fileUtil.saveAvatarImage(file, userId);
+
+        entity.setId(userId);
+        entity.setAvatar(avatar);
         updateById(entity);
     }
 

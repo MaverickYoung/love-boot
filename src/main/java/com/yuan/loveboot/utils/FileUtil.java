@@ -2,17 +2,19 @@ package com.yuan.loveboot.utils;
 
 import com.yuan.loveboot.exception.ServerException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Instant;
-import java.util.HashSet;
+import java.util.Base64;
 import java.util.Set;
 
 /**
@@ -27,130 +29,168 @@ public class FileUtil {
     // 从 application.yml 中读取上传目录
     @Value("${storage.dir.reward}")
     private String rewardDir;
+    @Value("${storage.dir.avatar}")
+    private String avatarDir;
 
     // 支持的图片格式
-    private static final Set<String> SUPPORTED_IMAGE_EXTENSIONS = new HashSet<>();
-
-    static {
-        SUPPORTED_IMAGE_EXTENSIONS.add("jpg");
-        SUPPORTED_IMAGE_EXTENSIONS.add("jpeg");
-        SUPPORTED_IMAGE_EXTENSIONS.add("png");
-        SUPPORTED_IMAGE_EXTENSIONS.add("gif");
-        SUPPORTED_IMAGE_EXTENSIONS.add("bmp");
-        SUPPORTED_IMAGE_EXTENSIONS.add("webp");
-        SUPPORTED_IMAGE_EXTENSIONS.add("svg");
-    }
+    private static final Set<String> SUPPORTED_IMAGE_TYPES = Set.of("jpg", "jpeg", "png", "gif", "svg");
 
     /**
-     * 生成文件名
+     * 保存奖励图片
      *
-     * @param month     月份
-     * @param userId    用户ID
-     * @param extension 文件扩展名
-     * @return 包含时间戳的文件名
-     */
-    public String generateFileName(String month, int userId, String extension) {
-        long timestamp = Instant.now().getEpochSecond();
-        return String.format("%s_%d_%d.%s", month, userId, timestamp, extension);
-    }
-
-    /**
-     * 保存文件
-     *
-     * @param fileBytes 文件字节数组
-     * @param name      文件名
-     * @param dir       文件目录
+     * @param file   MultipartFile 文件
+     * @param month  月份
+     * @param userId 用户ID
      * @return 文件路径
      */
-    public String saveFile(byte[] fileBytes, String name, String dir) {
-        // 创建保存目录
-        Path uploadPath = Path.of(dir);
+    public String saveRewardImage(MultipartFile file, String month, int userId) {
+        // 保存文件
+        long timestamp = Instant.now().getEpochSecond();
+        String fileName = String.format("%s_%d_%d.%s", month, userId, timestamp, getFileExtension(file.getOriginalFilename()));
 
+        String path;
+        try {
+            path = saveFile(file, fileName, rewardDir, SUPPORTED_IMAGE_TYPES);
+        } catch (IllegalArgumentException e) {
+            throw new ServerException(e.getMessage());
+        }
+        return path;
+    }
+
+    /**
+     * 保存头像图片
+     *
+     * @param file   MultipartFile 文件
+     * @param userId 用户ID
+     * @return 文件路径
+     */
+    public String saveAvatarImage(MultipartFile file, int userId) {
+        // 保存文件
+        long timestamp = Instant.now().getEpochSecond();
+        String fileName = String.format("%d_%d.%s", userId, timestamp, getFileExtension(file.getOriginalFilename()));
+
+        String path;
+        try {
+            path = saveFile(file, fileName, avatarDir, SUPPORTED_IMAGE_TYPES);
+        } catch (IllegalArgumentException e) {
+            throw new ServerException(e.getMessage());
+        }
+        return path;
+    }
+
+    /**
+     * 保存文件到指定路径
+     *
+     * @param file  MultipartFile 文件
+     * @param name  文件名
+     * @param dir   文件目录
+     * @param types 支持的文件格式
+     * @return 文件的完整路径
+     */
+    public static String saveFile(MultipartFile file, String name, String dir, Set<String> types) {
+        if (isInvalidFileType(file, types)) {
+            throw new IllegalArgumentException("不支持的文件格式");
+        }
+
+        Path uploadPath = Path.of(dir);
+        // 构建文件保存路径
+        Path filePath = uploadPath.resolve(name);
         try {
             // 检查文件夹是否存在，如果不存在则创建
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
             }
-        } catch (IOException e) {
-            log.error("创建{}文件夹失败", uploadPath);
-            log.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
 
-        // 构建文件保存路径
-        Path filePath = uploadPath.resolve(name);
-
-        try {
-            // 保存文件
-            Files.write(filePath, fileBytes);
+            Files.write(filePath, file.getBytes());
         } catch (IOException e) {
             log.error("保存{}文件失败", filePath);
             log.error(e.getMessage());
             throw new RuntimeException(e);
         }
-
-        // 返回文件路径
         return filePath.toString();
     }
 
     /**
-     * 保存奖励图片
+     * 获取本地图片并转换为 Base64
      *
-     * @param imageBytes 图片字节数组
-     * @param month      月份
-     * @param userId     用户ID
-     * @return 文件路径
+     * @param imagePath 图片的本地路径
+     * @return Base64 编码的图片字符串
      */
-    public String saveRewardImage(byte[] imageBytes, String month, int userId) {
-        // 获取文件扩展名
-        String extension = getFileExtensionFromBytes(imageBytes);
-
-        // 校验文件扩展名是否是支持的图片格式
-        if (!isSupportedImageExtension(extension)) {
-            throw new ServerException("图片格式错误，支持的格式为：jpg、jpeg、png、gif、bmp、webp、svg");
-        }
-
-        // 保存文件
-        return saveFile(imageBytes, generateFileName(month, userId, extension), rewardDir);
-    }
-
-    /**
-     * 根据字节数组获取文件扩展名
-     *
-     * @param fileBytes 文件字节数组
-     * @return 扩展名（不带点）
-     */
-    public String getFileExtensionFromBytes(byte[] fileBytes) {
-        // 使用 ByteArrayInputStream 读取字节流
-        try (ByteArrayInputStream bais = new ByteArrayInputStream(fileBytes)) {
-            // 使用 ImageIO 来读取图像
-            BufferedImage bufferedImage = ImageIO.read(bais);
-
-            // 如果无法读取为图片，抛出异常
-            if (bufferedImage == null) {
-                throw new ServerException("无法识别文件格式");
+    @Named("imageAsBase64")
+    public static String getImageAsBase64(String imagePath) {
+        try {
+            File imageFile = new File(imagePath);
+            if (!imageFile.exists()) {
+                log.error("图片文件不存在：{}", imagePath);
+                throw new ServerException("图片文件不存在");
             }
+            // 读取文件并转换为 Base64 编码
+            return encodeImageToBase64(imageFile);
 
-            // 使用 ImageIO 获取所有支持的图片格式
-            for (String format : SUPPORTED_IMAGE_EXTENSIONS) {
-                // 检查是否可以通过该格式来写入图片
-                if (ImageIO.getImageWritersBySuffix(format).hasNext()) {
-                    return format;
-                }
-            }
-            throw new ServerException("不支持的图片格式");
         } catch (IOException e) {
-            throw new ServerException("图片读取失败");
+            log.error("读取图片文件失败：{}", e.getMessage());
+            throw new ServerException("读取图片文件失败");
         }
     }
 
     /**
-     * 校验文件扩展名是否为支持的图片格式
+     * 将图片文件转换为 Base64 编码
      *
-     * @param extension 文件扩展名
-     * @return 是否为支持的图片格式
+     * @param imageFile 图片文件
+     * @return 带有 data 前缀的 Base64 编码字符串
+     * @throws IOException 读取文件失败时抛出异常
      */
-    private boolean isSupportedImageExtension(String extension) {
-        return SUPPORTED_IMAGE_EXTENSIONS.contains(extension.toLowerCase());
+    private static String encodeImageToBase64(File imageFile) throws IOException {
+        try (FileInputStream imageStream = new FileInputStream(imageFile)) {
+            byte[] imageBytes = imageStream.readAllBytes();
+            String base64String = Base64.getEncoder().encodeToString(imageBytes);
+            // 根据图片文件的扩展名来决定前缀
+            String extension = getFileExtension(imageFile.getName());
+            return "data:image/" + extension + ";base64," + base64String;
+        }
+    }
+
+
+    /**
+     * 生成文件名
+     *
+     * @param month     年月 (格式 YYYY-MM)
+     * @param userId    用户 ID
+     * @param extension 文件拓展名
+     * @return 规范化后的文件名
+     */
+    public static String generateFileName(String month, int userId, String extension) {
+        long timestamp = Instant.now().getEpochSecond();
+        return String.format("%s_%d_%d.%s", month, userId, timestamp, extension);
+    }
+
+    /**
+     * 获取文件扩展名
+     *
+     * @param fileName 文件路径
+     * @return 扩展名
+     */
+    private static String getFileExtension(String fileName) {
+        if (StringUtils.isBlank(fileName)) {
+            return null;
+        }
+        int lastIndex = fileName.lastIndexOf(".");
+        String extension = (lastIndex == -1) ? "" : fileName.substring(lastIndex + 1);
+        return extension.toLowerCase();
+    }
+
+    /**
+     * 检查文件格式是否**不合法**
+     *
+     * @param file  MultipartFile 文件
+     * @param types 支持的文件格式
+     * @return 是否为**不支持**的文件格式
+     */
+    public static boolean isInvalidFileType(MultipartFile file, Set<String> types) {
+        String extension = getFileExtension(file.getOriginalFilename());
+        if (extension == null) {
+            return true;
+        }
+        return !types.contains(extension);
     }
 }

@@ -5,7 +5,7 @@
 
 <mapper namespace="com.yuan.loveboot.poop.dao.PoopLogDao">
 
-    <select id="countUserPoopMonthly" resultType="com.yuan.loveboot.poop.po.PoopSummary">
+    <select id="countByMonth" resultType="com.yuan.loveboot.poop.po.PoopSummary">
         SELECT
         to_char(log_time, 'YYYY-MM') AS month,
         user_id,
@@ -23,5 +23,10 @@
         </if>
         GROUP BY month, user_id
         ORDER BY month, user_id
+    </select>
+
+    <select id="selectDistinctMonths" resultType="java.time.YearMonth">
+        SELECT DISTINCT to_char(log_time, 'YYYY-MM') AS month
+        FROM poop_log
     </select>
 </mapper>

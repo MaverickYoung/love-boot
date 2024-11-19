@@ -1,17 +1,21 @@
 package com.yuan.loveboot.system.controller;
 
-import com.yuan.loveboot.system.dto.SysUserAvatarDTO;
 import com.yuan.loveboot.system.dto.SysUserBaseDTO;
 import com.yuan.loveboot.system.dto.SysUserDTO;
 import com.yuan.loveboot.system.dto.SysUserPasswordDTO;
 import com.yuan.loveboot.system.service.SysUserService;
+import com.yuan.loveboot.system.vo.SysUserProfileVO;
 import com.yuan.loveboot.system.vo.SysUserVO;
 import com.yuan.loveboot.utils.Result;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 
 /**
@@ -26,6 +30,13 @@ import org.springframework.web.bind.annotation.*;
 public class SysUserController {
     private final SysUserService sysUserService;
 
+    @GetMapping("profile")
+    @Operation(summary = "获取用户头像和昵称")
+    public Result<List<SysUserProfileVO>> profile(@Schema(description = "用户编号") @RequestParam List<Integer> idList) {
+        List<SysUserProfileVO> list = sysUserService.findByIds(idList);
+
+        return Result.ok(list);
+    }
 
     @GetMapping("info")
     @Operation(summary = "获取用户信息")
@@ -36,7 +47,7 @@ public class SysUserController {
     }
 
     @PutMapping("info")
-    @Operation(summary = "修改登录用户信息")
+    @Operation(summary = "修改当前用户信息")
     public Result<String> loginInfo(@RequestBody @Valid SysUserBaseDTO dto) {
         sysUserService.update(dto);
 
@@ -44,9 +55,9 @@ public class SysUserController {
     }
 
     @PutMapping("avatar")
-    @Operation(summary = "修改登录用户头像")
-    public Result<String> avatar(@RequestBody @Valid SysUserAvatarDTO avatar) {
-        sysUserService.updateAvatar(avatar);
+    @Operation(summary = "修改当前用户头像")
+    public Result<String> avatar(@Schema(description = "头像图片") @RequestParam("file") MultipartFile file) {
+        sysUserService.updateAvatar(file);
 
         return Result.ok();
     }

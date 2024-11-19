@@ -23,7 +23,7 @@ public class SysUserVO implements Serializable {
     @Schema(description = "用户名")
     private String username;
 
-    @Schema(description = "头像")
+    @Schema(description = "头像，base64")
     private String avatar;
 
     @Schema(description = "性别")

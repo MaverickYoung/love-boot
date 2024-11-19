@@ -8,13 +8,13 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 分页响应
+ * 分页
  *
  * @author Maverick
  */
 @Data
 @Schema(description = "分页数据")
-public class PageResult<T> implements Serializable {
+public class PageVO<T>  implements Serializable {
     @Serial
     private static final long serialVersionUID = -1142397817018299779L;
 
@@ -26,10 +26,11 @@ public class PageResult<T> implements Serializable {
 
     /**
      * 分页
-     * @param list   列表数据
-     * @param total  总记录数
+     *
+     * @param list  列表数据
+     * @param total 总记录数
      */
-    public PageResult(List<T> list, long total) {
+    public PageVO(List<T> list, long total) {
         this.list = list;
         this.total = (int)total;
     }

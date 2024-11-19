@@ -19,3 +19,13 @@ storage:
   dir:
     base: D:/projects/love/upload
     reward: ${storage.dir.base}/image/reward
+    avatar: ${storage.dir.base}/image/avatar
+    poop: ${storage.dir.base}/image/poop
+  path:
+    defaultAvatar: ${storage.dir.avatar}/default.png
+
+#mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+

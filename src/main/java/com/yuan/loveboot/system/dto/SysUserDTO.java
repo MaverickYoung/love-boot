@@ -26,9 +26,6 @@ public class SysUserDTO implements Serializable {
     @OptionalSize(min = 4, max = 20, message = "密码不合规")
     private String password;
 
-    @Schema(description = "头像")
-    private String avatar;
-
     @Schema(description = "性别")
     private int gender;
 

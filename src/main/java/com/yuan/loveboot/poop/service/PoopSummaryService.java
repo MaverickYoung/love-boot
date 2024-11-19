@@ -2,8 +2,10 @@ package com.yuan.loveboot.poop.service;
 
 import com.yuan.loveboot.mybatis.service.BaseService;
 import com.yuan.loveboot.poop.po.PoopSummary;
-import com.yuan.loveboot.poop.vo.UserStatsVO;
+import com.yuan.loveboot.poop.vo.PoopRewardVO;
+import com.yuan.loveboot.poop.vo.PoopSummaryVO;
 import com.yuan.loveboot.utils.YearMonthRange;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.YearMonth;
 import java.util.List;
@@ -35,13 +37,21 @@ public interface PoopSummaryService extends BaseService<PoopSummary> {
      * @param range 查询范围
      * @return 统计结果
      */
-    List<UserStatsVO> findPoopSummaryByMonth(YearMonthRange range);
+    List<PoopSummaryVO> findByMonth(YearMonthRange range);
+
+    /**
+     * 获取指定月份便便奖励信息。
+     *
+     * @param month 月份
+     * @return 查询结果
+     */
+    List<PoopRewardVO> findRewardByMonth(YearMonth month);
 
     /**
      * 更新奖励领取状态和图片。
      *
-     * @param imageBytes 奖励图片
-     * @param month      年月（格式：YYYY-MM）
+     * @param file  奖励图片
+     * @param month 年月
      */
-    void updateReward(byte[] imageBytes, YearMonth month);
+    void updateReward(MultipartFile file, YearMonth month);
 }

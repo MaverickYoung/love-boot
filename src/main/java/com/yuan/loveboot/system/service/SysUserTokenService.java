@@ -23,9 +23,9 @@ public interface SysUserTokenService extends BaseService<SysUserToken> {
      * 根据RefreshToken，生成新Token
      *
      * @param refreshToken 刷新令牌
-     * @return 访问令牌
+     * @return 访问令牌和刷新令牌
      */
-    String refreshToken(String refreshToken);
+    SysUserTokenVO refreshToken(String refreshToken);
 
     /**
      * Token过期

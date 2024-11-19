@@ -1,12 +1,15 @@
 package com.yuan.loveboot.system.service;
 
 import com.yuan.loveboot.mybatis.service.BaseService;
-import com.yuan.loveboot.system.dto.SysUserAvatarDTO;
 import com.yuan.loveboot.system.dto.SysUserBaseDTO;
 import com.yuan.loveboot.system.dto.SysUserDTO;
 import com.yuan.loveboot.system.dto.SysUserPasswordDTO;
 import com.yuan.loveboot.system.po.SysUser;
+import com.yuan.loveboot.system.vo.SysUserProfileVO;
 import com.yuan.loveboot.system.vo.SysUserVO;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * 系统用户
@@ -14,11 +17,25 @@ import com.yuan.loveboot.system.vo.SysUserVO;
  * @author Maverick
  */
 public interface SysUserService extends BaseService<SysUser> {
+
+    /**
+     * 查找用户昵称和头像
+     *
+     * @param idList 用户ID
+     * @return 查找结果
+     */
+    List<SysUserProfileVO> findByIds(List<Integer> idList);
+
     void save(SysUserDTO dto);
 
     void update(SysUserBaseDTO dto);
 
-    void updateAvatar(SysUserAvatarDTO avatar);
+    /**
+     * 更新当前用户头像
+     *
+     * @param file 头像
+     */
+    void updateAvatar(MultipartFile file);
 
     /**
      * 更新密码

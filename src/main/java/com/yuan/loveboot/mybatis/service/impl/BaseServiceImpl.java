@@ -23,7 +23,7 @@ public class BaseServiceImpl<M extends BaseDao<T>, T> extends ServiceImpl<M, T> 
      * @param dto 分页参数
      */
     protected IPage<T> getPage(PageDTO dto) {
-        Page<T> page = new Page<>(dto.getPage(), dto.getLimit());
+        Page<T> page = new Page<>(dto.getCurrent(), dto.getSize());
 
         // 排序
         if (!StringUtils.isBlank(dto.getOrder())) {

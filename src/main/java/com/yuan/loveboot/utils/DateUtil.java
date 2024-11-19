@@ -37,7 +37,7 @@ public class DateUtil {
      * 日期格式化 日期格式为：yyyy-MM-dd
      *
      * @param date    日期
-     * @param pattern 格式，如：DateUtils.DATE_TIME_PATTERN
+     * @param pattern 格式，如：{@link  DateUtil#DATE_TIME_PATTERN}
      * @return 返回yyyy-MM-dd格式日期
      */
     public static String format(Date date, String pattern) {
@@ -52,8 +52,8 @@ public class DateUtil {
      * 日期解析
      *
      * @param date    日期
-     * @param pattern 格式，如：DateUtils.DATE_TIME_PATTERN
-     * @return 返回Date
+     * @param pattern 格式，如：{@link  DateUtil#DATE_TIME_PATTERN}
+     * @return 返回 {@link Date}
      */
     public static Date parse(String date, String pattern) {
         try {

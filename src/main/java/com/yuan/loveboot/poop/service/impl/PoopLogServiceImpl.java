@@ -1,14 +1,24 @@
 package com.yuan.loveboot.poop.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yuan.loveboot.mybatis.service.impl.BaseServiceImpl;
+import com.yuan.loveboot.poop.convert.PoopLogConvert;
 import com.yuan.loveboot.poop.dao.PoopLogDao;
 import com.yuan.loveboot.poop.po.PoopLog;
 import com.yuan.loveboot.poop.po.PoopSummary;
 import com.yuan.loveboot.poop.service.PoopLogService;
+import com.yuan.loveboot.poop.vo.PoopLogVO;
+import com.yuan.loveboot.system.service.SysCacheService;
+import com.yuan.loveboot.utils.PageDTO;
+import com.yuan.loveboot.utils.PageVO;
+import com.yuan.loveboot.utils.Result;
 import com.yuan.loveboot.utils.YearMonthRange;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.YearMonth;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,8 +29,41 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class PoopLogServiceImpl extends BaseServiceImpl<PoopLogDao, PoopLog> implements PoopLogService {
+    private final SysCacheService sysCacheService;
+
     @Override
-    public List<PoopSummary> countUserPoopMonthly(YearMonthRange range) {
-        return baseMapper.countUserPoopMonthly(range);
+    public List<PoopSummary> countByMonth(YearMonthRange range) {
+        return baseMapper.countByMonth(range);
+    }
+
+    @Override
+    public List<String> findAvailableMonths() {
+        List<YearMonth> yearMonths = baseMapper.selectDistinctMonths();
+        List<String> months = new ArrayList<>();
+        for (YearMonth yearMonth : yearMonths) {
+            months.add(yearMonth.getMonth().toString());
+        }
+        return months;
+    }
+
+    @Override
+    public Result<PageVO<PoopLogVO>> page(PageDTO dto) {
+        IPage<PoopLog> page = baseMapper.selectPage(getPage(dto), null);
+        List<PoopLog> records = page.getRecords();
+        List<PoopLogVO> list = PoopLogConvert.INSTANCE.convert(records);
+
+        return Result.ok(new PageVO<>(list, page.getTotal()));
+    }
+
+    @Override
+    public void save(int type) {
+
+
+
+        PoopLog poopLog = new PoopLog();
+        poopLog.setPoopType(type);
+        poopLog.setUserId(sysCacheService.getUserId());
+        poopLog.setLogTime(LocalDateTime.now());
+        baseMapper.insert(poopLog);
     }
 }
