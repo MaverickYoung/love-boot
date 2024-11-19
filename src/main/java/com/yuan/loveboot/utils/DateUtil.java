@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 
 /**
@@ -60,7 +61,7 @@ public class DateUtil {
             return new SimpleDateFormat(pattern).parse(date);
         } catch (ParseException e) {
             log.error(e.getMessage());
+            throw new DateTimeParseException(e.getMessage(), date, 0);
         }
-        return null;
     }
 }
