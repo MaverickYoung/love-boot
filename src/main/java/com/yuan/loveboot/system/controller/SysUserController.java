@@ -8,6 +8,7 @@ import com.yuan.loveboot.system.vo.SysUserProfileVO;
 import com.yuan.loveboot.system.vo.SysUserVO;
 import com.yuan.loveboot.utils.Result;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -56,7 +57,7 @@ public class SysUserController {
 
     @PutMapping("avatar")
     @Operation(summary = "修改当前用户头像")
-    public Result<String> avatar(@Schema(description = "头像图片") @RequestParam("file") MultipartFile file) {
+    public Result<String> avatar(@Parameter(description = "头像图片") @RequestParam("file") MultipartFile file) {
         sysUserService.updateAvatar(file);
 
         return Result.ok();

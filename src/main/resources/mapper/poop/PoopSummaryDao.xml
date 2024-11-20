@@ -21,13 +21,13 @@
         FROM poop_summary p
         JOIN sys_user u ON p.user_id = u.id
         WHERE p.is_deleted = false
-        <if test="startMonth != null and endMonth != null and startMonth == endMonth">
+        <if test="start != null and end != null and start == end">
             p.month = to_date(#{startMonth}, 'YYYY-MM')
         </if>
-        <if test=" startMonth != null and startMonth != endMonth">
+        <if test=" start != null and start != end">
             AND p.month &gt;= to_date(#{startMonth}, 'YYYY-MM')
         </if>
-        <if test=" startMonth != null and startMonth != endMonth ">
+        <if test=" start != null and start != end ">
             AND p.month &lt;= to_date(#{endMonth}, 'YYYY-MM')
         </if>;
     </select>

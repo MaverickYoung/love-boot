@@ -27,15 +27,15 @@ public class YearMonthRange {
     /**
      * 构造函数，接收起始和结束年月
      *
-     * @param startMonth 起始年月 YYYY-MM
-     * @param endMonth   结束年月 YYYY-MM
+     * @param start 起始年月 YYYY-MM
+     * @param end   结束年月 YYYY-MM
      */
-    public YearMonthRange(String startMonth, String endMonth) {
-        if (StringUtils.isEmpty(startMonth)) {
-            this.start = YearMonth.parse(startMonth);
+    public YearMonthRange(String start, String end) {
+        if (StringUtils.isEmpty(start)) {
+            this.start = YearMonth.parse(start);
         }
-        if (StringUtils.isEmpty(endMonth)) {
-            this.end = YearMonth.parse(endMonth);
+        if (StringUtils.isEmpty(end)) {
+            this.end = YearMonth.parse(end);
         }
     }
 

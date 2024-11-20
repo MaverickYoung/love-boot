@@ -12,14 +12,14 @@
         COUNT(*) AS poop_count
         FROM poop_log
         WHERE is_deleted = false
-        <if test="startMonth != null and endMonth != null and startMonth == endMonth">
-            AND log_time = to_date(#{startMonth}, 'YYYY-MM')
+        <if test="start != null and end != null and start == end">
+            AND log_time = to_date(#{start}, 'YYYY-MM')
         </if>
-        <if test=" startMonth != null and startMonth != endMonth">
-            AND log_time &gt;= to_date(#{startMonth}, 'YYYY-MM')
+        <if test=" start != null and start != end">
+            AND log_time &gt;= to_date(#{start}, 'YYYY-MM')
         </if>
-        <if test=" startMonth != null and startMonth != endMonth ">
-            AND log_time &lt;= to_date(#{endMonth}, 'YYYY-MM')
+        <if test=" start != null and start != end ">
+            AND log_time &lt;= to_date(#{end}, 'YYYY-MM')
         </if>
         GROUP BY month, user_id
         ORDER BY month, user_id

@@ -118,6 +118,9 @@ public class FileUtil {
      */
     @Named("imageAsBase64")
     public static String getImageAsBase64(String imagePath) {
+        if (StringUtils.isBlank(imagePath)) {
+            return null;
+        }
         try {
             File imageFile = new File(imagePath);
             if (!imageFile.exists()) {

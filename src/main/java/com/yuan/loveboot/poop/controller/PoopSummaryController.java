@@ -6,7 +6,7 @@ import com.yuan.loveboot.poop.vo.PoopSummaryVO;
 import com.yuan.loveboot.utils.Result;
 import com.yuan.loveboot.utils.YearMonthRange;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -38,8 +38,8 @@ public class PoopSummaryController {
 
     @PostMapping("reward")
     @Operation(summary = "更新奖励")
-    public Result<String> updateReward(@Schema(description = "奖励图片") @RequestParam("file") MultipartFile file,
-                                       @Schema(description = "月份") @RequestParam("month") String month) {
+    public Result<String> updateReward(@Parameter(description = "奖励图片") @RequestParam("file") MultipartFile file,
+                                       @Parameter(description = "月份") @RequestParam("month") String month) {
         poopSummaryService.updateReward(file, YearMonth.parse(month));
 
         return Result.ok();
@@ -47,7 +47,7 @@ public class PoopSummaryController {
 
     @GetMapping("reward/{month}")
     @Operation(summary = "奖励信息")
-    public Result<List<PoopRewardVO>> getReward(@Schema(description = "月份") @PathVariable String month) {
+    public Result<List<PoopRewardVO>> getReward(@Parameter(description = "月份") @PathVariable String month) {
         List<PoopRewardVO> list = poopSummaryService.findRewardByMonth(YearMonth.parse(month));
 
         return Result.ok(list);

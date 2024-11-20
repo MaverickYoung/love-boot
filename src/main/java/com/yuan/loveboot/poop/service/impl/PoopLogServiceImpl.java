@@ -57,9 +57,6 @@ public class PoopLogServiceImpl extends BaseServiceImpl<PoopLogDao, PoopLog> imp
 
     @Override
     public void save(int type) {
-
-
-
         PoopLog poopLog = new PoopLog();
         poopLog.setPoopType(type);
         poopLog.setUserId(sysCacheService.getUserId());
