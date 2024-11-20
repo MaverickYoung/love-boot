@@ -13,13 +13,13 @@
         FROM poop_log
         WHERE is_deleted = false
         <if test="start != null and end != null and start == end">
-            AND log_time = to_date(#{start}, 'YYYY-MM')
+            AND to_char(log_time, 'YYYY-MM') =#{start}
         </if>
         <if test=" start != null and start != end">
-            AND log_time &gt;= to_date(#{start}, 'YYYY-MM')
+            AND to_char(log_time, 'YYYY-MM') &gt;= #{start}
         </if>
-        <if test=" start != null and start != end ">
-            AND log_time &lt;= to_date(#{end}, 'YYYY-MM')
+        <if test=" end != null and start != end ">
+            AND to_char(log_time, 'YYYY-MM') &lt;=#{end}
         </if>
         GROUP BY month, user_id
         ORDER BY month, user_id

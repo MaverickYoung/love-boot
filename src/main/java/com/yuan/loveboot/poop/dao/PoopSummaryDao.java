@@ -7,7 +7,6 @@ import com.yuan.loveboot.utils.YearMonthRange;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.time.YearMonth;
 import java.util.List;
 
 /**
@@ -19,8 +18,10 @@ import java.util.List;
 public interface PoopSummaryDao extends BaseDao<PoopSummary> {
     /**
      * 查询指定月份便便数量最多的用户
+     *
+     * @param month YYYY-MM
      */
-    List<Integer> selectUserWithMaxPoopCount(@Param("month") YearMonth month);
+    List<Integer> selectUserWithMaxPoopCount(@Param("month") String month);
 
     /**
      * 获取指定月份范围的用户的便便统计信息

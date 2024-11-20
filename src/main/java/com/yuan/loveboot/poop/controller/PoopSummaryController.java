@@ -30,7 +30,9 @@ public class PoopSummaryController {
 
     @GetMapping("list")
     @Operation(summary = "获取用户的便便核算信息")
-    public Result<List<PoopSummaryVO>> getList(@RequestBody YearMonthRange range) {
+    public Result<List<PoopSummaryVO>> getList(@Parameter(description = "起始年月 YYYY-MM") @RequestParam(required = false) String start,
+                                               @Parameter(description = "结束年月 YYYY-MM") @RequestParam(required = false) String end) {
+        YearMonthRange range = new YearMonthRange(start, end);
         List<PoopSummaryVO> list = poopSummaryService.findByMonth(range);
 
         return Result.ok(list);

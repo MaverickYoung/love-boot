@@ -8,11 +8,11 @@
     <select id="selectUserWithMaxPoopCount" resultType="integer">
         SELECT user_id
         FROM poop_summary
-        WHERE month = to_char(#{month}, 'YYYY-MM')
+        WHERE month = #{month}
           AND is_deleted = false
           AND poop_count = (SELECT MAX(poop_count)
                             FROM poop_summary
-                            WHERE month = to_char(#{month}, 'YYYY-MM')
+                            WHERE month = #{month}
                               AND is_deleted = false);
     </select>
 
@@ -27,7 +27,7 @@
         <if test=" start != null and start != end">
             AND p.month &gt;= to_date(#{startMonth}, 'YYYY-MM')
         </if>
-        <if test=" start != null and start != end ">
+        <if test=" end != null and start != end ">
             AND p.month &lt;= to_date(#{endMonth}, 'YYYY-MM')
         </if>;
     </select>

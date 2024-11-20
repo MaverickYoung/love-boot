@@ -45,8 +45,19 @@ public class PoopSummaryServiceImpl extends BaseServiceImpl<PoopSummaryDao, Poop
         // 统计上个月用户便便数量
         List<PoopSummary> poopSummaries = poopLogService.countByMonth(new YearMonthRange(lastMonth));
 
-        // 批量插入或更新
-        this.saveOrUpdateBatch(poopSummaries);
+        // 插入或更新
+        for (PoopSummary poopSummary : poopSummaries) {
+            LambdaQueryWrapper<PoopSummary> query = Wrappers.lambdaQuery();
+            query.eq(PoopSummary::getMonth, poopSummary.getMonth())
+                    .eq(PoopSummary::getUserId, poopSummary.getUserId());
+            PoopSummary entry = baseMapper.selectOne(query);
+            if (entry == null) {
+                this.save(poopSummary);
+            } else {
+                poopSummary.setId(entry.getId());
+                this.updateById(poopSummary);
+            }
+        }
     }
 
     @Override
@@ -55,9 +66,9 @@ public class PoopSummaryServiceImpl extends BaseServiceImpl<PoopSummaryDao, Poop
         YearMonth lastMonth = YearMonth.now().minusMonths(1);
 
         // 查询上个月便便最多的用户
-        List<Integer> list = baseMapper.selectUserWithMaxPoopCount(lastMonth);
+        List<Integer> list = baseMapper.selectUserWithMaxPoopCount(lastMonth.toString());
 
-        if (list == null) {
+        if (list.isEmpty()) {
             // 如果没有数据，直接返回
             return;
         }

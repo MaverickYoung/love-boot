@@ -20,7 +20,7 @@ public class PoopSummary extends BasePO {
     /**
      * 用户ID
      */
-    private String userId;
+    private Integer userId;
 
     /**
      * 用户当月的便便数量

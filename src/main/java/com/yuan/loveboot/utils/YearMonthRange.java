@@ -1,6 +1,5 @@
 package com.yuan.loveboot.utils;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,10 +17,14 @@ import java.time.YearMonth;
 @NoArgsConstructor
 public class YearMonthRange {
 
-    @Schema(description = "起始年月 YYYY-MM")
+    /**
+     * 起始年月
+     */
     private YearMonth start;
 
-    @Schema(description = "结束年月 YYYY-MM")
+    /**
+     * 结束年月
+     */
     private YearMonth end;
 
     /**
@@ -31,10 +34,10 @@ public class YearMonthRange {
      * @param end   结束年月 YYYY-MM
      */
     public YearMonthRange(String start, String end) {
-        if (StringUtils.isEmpty(start)) {
+        if (!StringUtils.isBlank(start)) {
             this.start = YearMonth.parse(start);
         }
-        if (StringUtils.isEmpty(end)) {
+        if (!StringUtils.isEmpty(end)) {
             this.end = YearMonth.parse(end);
         }
     }
