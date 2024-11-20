@@ -7,7 +7,7 @@ import com.yuan.loveboot.common.exception.ServerException;
 import com.yuan.loveboot.common.mybatis.service.impl.BaseServiceImpl;
 import com.yuan.loveboot.common.properties.SecurityProperties;
 import com.yuan.loveboot.common.utils.TokenUtil;
-import com.yuan.loveboot.system.convert.SysUserTokenConvert;
+import com.yuan.loveboot.system.converter.SysUserTokenConverter;
 import com.yuan.loveboot.system.dao.SysUserTokenDao;
 import com.yuan.loveboot.system.po.SysUserToken;
 import com.yuan.loveboot.system.service.SysCacheService;
@@ -56,7 +56,7 @@ public class SysUserTokenServiceImpl extends BaseServiceImpl<SysUserTokenDao, Sy
         }
 
         sysCacheService.cacheAccessToken(userId, accessToken);
-        return SysUserTokenConvert.INSTANCE.convert(entity);
+        return SysUserTokenConverter.INSTANCE.convert(entity);
     }
 
     @Override

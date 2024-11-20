@@ -6,7 +6,7 @@ import com.yuan.loveboot.common.crypto.AesPasswordEncoder;
 import com.yuan.loveboot.common.exception.ServerException;
 import com.yuan.loveboot.common.mybatis.service.impl.BaseServiceImpl;
 import com.yuan.loveboot.common.utils.FileUtil;
-import com.yuan.loveboot.system.convert.SysUserConvert;
+import com.yuan.loveboot.system.converter.SysUserConverter;
 import com.yuan.loveboot.system.dao.SysUserDao;
 import com.yuan.loveboot.system.dto.SysUserBaseDTO;
 import com.yuan.loveboot.system.dto.SysUserDTO;
@@ -49,13 +49,13 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUser> imp
         }
         List<SysUser> list = baseMapper.selectByIds(idList);
 
-        return SysUserConvert.INSTANCE.convertProfile(list);
+        return SysUserConverter.INSTANCE.convertProfile(list);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void save(SysUserDTO dto) {
-        SysUser entity = SysUserConvert.INSTANCE.convert(dto);
+        SysUser entity = SysUserConverter.INSTANCE.convert(dto);
 
         // 判断用户名是否存在
         SysUser user = baseMapper.selectByUsername(entity.getUsername());
@@ -74,7 +74,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUser> imp
 
     @Override
     public void update(SysUserBaseDTO dto) {
-        SysUser entity = SysUserConvert.INSTANCE.convert(dto);
+        SysUser entity = SysUserConverter.INSTANCE.convert(dto);
 
         // 判断用户名是否存在
         SysUser user = baseMapper.selectByUsername(entity.getUsername());
@@ -124,6 +124,6 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUser> imp
     @Override
     public SysUserVO getUser() {
         SysUser user = getById(sysCacheService.getUserId());
-        return SysUserConvert.INSTANCE.convert(user);
+        return SysUserConverter.INSTANCE.convert(user);
     }
 }

@@ -31,7 +31,7 @@ public class SysCaptchaServiceImpl implements SysCaptchaService {
         // 定义图形验证码的长、宽、验证码字符数
         SpecCaptcha specCaptcha = new SpecCaptcha(150, 50, 5);
         String value = specCaptcha.text().toLowerCase();
-        String image =specCaptcha.toBase64();
+        String image = specCaptcha.toBase64();
 
         // 保存到缓存
         sysCacheService.cacheCaptcha(key, value);
@@ -47,7 +47,7 @@ public class SysCaptchaServiceImpl implements SysCaptchaService {
 
     @Override
     public boolean isCaptchaEnabled() {
-        return false;
+        return true;
     }
 
     @Override

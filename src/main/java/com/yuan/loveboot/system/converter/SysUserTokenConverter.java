@@ -1,4 +1,4 @@
-package com.yuan.loveboot.system.convert;
+package com.yuan.loveboot.system.converter;
 
 import com.yuan.loveboot.system.po.SysUserToken;
 import com.yuan.loveboot.system.vo.SysUserTokenVO;
@@ -11,8 +11,8 @@ import org.mapstruct.factory.Mappers;
  * @author Maverick
  */
 @Mapper
-public interface SysUserTokenConvert {
-    SysUserTokenConvert INSTANCE = Mappers.getMapper(SysUserTokenConvert.class);
+public interface SysUserTokenConverter {
+    SysUserTokenConverter INSTANCE = Mappers.getMapper(SysUserTokenConverter.class);
 
     SysUserToken convert(SysUserTokenVO vo);
 

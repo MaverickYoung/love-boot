@@ -1,5 +1,6 @@
-package com.yuan.loveboot.poop.convert;
+package com.yuan.loveboot.poop.converter;
 
+import com.yuan.loveboot.common.utils.BaseConverter;
 import com.yuan.loveboot.common.utils.FileUtil;
 import com.yuan.loveboot.poop.po.PoopSummary;
 import com.yuan.loveboot.poop.vo.PoopRewardVO;
@@ -16,14 +17,16 @@ import java.util.List;
  * @author Maverick
  */
 @Mapper(componentModel = "spring", uses = FileUtil.class)
-public interface PoopSummaryConvert {
-    PoopSummaryConvert INSTANCE = Mappers.getMapper(PoopSummaryConvert.class);
+public interface PoopSummaryConverter extends BaseConverter {
+    PoopSummaryConverter INSTANCE = Mappers.getMapper(PoopSummaryConverter.class);
 
     PoopSummaryVO convert(PoopSummary entity);
+
     List<PoopSummaryVO> convert(List<PoopSummary> list);
 
     @Mapping(target = "rewardImage", source = "rewardImage", qualifiedByName = "imageAsBase64")
     PoopRewardVO convertReward(PoopSummary entity);
+
     List<PoopRewardVO> convertReward(List<PoopSummary> list);
 
 }

@@ -1,6 +1,6 @@
 package com.yuan.loveboot;
 
-import com.yuan.loveboot.utils.YearMonthRange;
+import com.yuan.loveboot.common.utils.YearMonthRange;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

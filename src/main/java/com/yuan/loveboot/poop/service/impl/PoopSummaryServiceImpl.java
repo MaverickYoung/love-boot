@@ -8,7 +8,7 @@ import com.yuan.loveboot.common.exception.ServerException;
 import com.yuan.loveboot.common.mybatis.service.impl.BaseServiceImpl;
 import com.yuan.loveboot.common.utils.FileUtil;
 import com.yuan.loveboot.common.utils.YearMonthRange;
-import com.yuan.loveboot.poop.convert.PoopSummaryConvert;
+import com.yuan.loveboot.poop.converter.PoopSummaryConverter;
 import com.yuan.loveboot.poop.dao.PoopSummaryDao;
 import com.yuan.loveboot.poop.po.PoopSummary;
 import com.yuan.loveboot.poop.service.PoopLogService;
@@ -55,6 +55,7 @@ public class PoopSummaryServiceImpl extends BaseServiceImpl<PoopSummaryDao, Poop
                 this.save(poopSummary);
             } else {
                 poopSummary.setId(entry.getId());
+                poopSummary.setWinnerStatus(false);
                 this.updateById(poopSummary);
             }
         }
@@ -112,7 +113,7 @@ public class PoopSummaryServiceImpl extends BaseServiceImpl<PoopSummaryDao, Poop
         }
 
         List<PoopSummary> list = baseMapper.selectList(query);
-        return PoopSummaryConvert.INSTANCE.convert(list);
+        return PoopSummaryConverter.INSTANCE.convert(list);
     }
 
     @Override
@@ -122,7 +123,7 @@ public class PoopSummaryServiceImpl extends BaseServiceImpl<PoopSummaryDao, Poop
         query.eq(PoopSummary::getWinnerStatus, true);
 
         List<PoopSummary> list = baseMapper.selectList(query);
-        return PoopSummaryConvert.INSTANCE.convertReward(list);
+        return PoopSummaryConverter.INSTANCE.convertReward(list);
     }
 
     @Override

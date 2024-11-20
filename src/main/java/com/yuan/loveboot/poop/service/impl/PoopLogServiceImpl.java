@@ -6,7 +6,7 @@ import com.yuan.loveboot.common.utils.PageDTO;
 import com.yuan.loveboot.common.utils.PageVO;
 import com.yuan.loveboot.common.utils.Result;
 import com.yuan.loveboot.common.utils.YearMonthRange;
-import com.yuan.loveboot.poop.convert.PoopLogConvert;
+import com.yuan.loveboot.poop.converter.PoopLogConverter;
 import com.yuan.loveboot.poop.dao.PoopLogDao;
 import com.yuan.loveboot.poop.po.PoopLog;
 import com.yuan.loveboot.poop.po.PoopSummary;
@@ -50,7 +50,7 @@ public class PoopLogServiceImpl extends BaseServiceImpl<PoopLogDao, PoopLog> imp
     public Result<PageVO<PoopLogVO>> page(PageDTO dto) {
         IPage<PoopLog> page = baseMapper.selectPage(getPage(dto), null);
         List<PoopLog> records = page.getRecords();
-        List<PoopLogVO> list = PoopLogConvert.INSTANCE.convert(records);
+        List<PoopLogVO> list = PoopLogConverter.INSTANCE.convert(records);
 
         return Result.ok(new PageVO<>(list, page.getTotal()));
     }

@@ -1,5 +1,6 @@
 package com.yuan.loveboot.crypto;
 
+import com.yuan.loveboot.common.crypto.AesPasswordEncoder;
 import org.junit.jupiter.api.Test;
 
 /**

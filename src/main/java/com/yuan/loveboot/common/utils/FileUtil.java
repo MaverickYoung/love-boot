@@ -148,9 +148,32 @@ public class FileUtil {
             byte[] imageBytes = imageStream.readAllBytes();
             String base64String = Base64.getEncoder().encodeToString(imageBytes);
             // 根据图片文件的扩展名来决定前缀
-            String extension = getFileExtension(imageFile.getName());
-            return "data:image/" + extension + ";base64," + base64String;
+            String mime = getMime(imageFile.getName());
+            return "data:image/" + mime + ";base64," + base64String;
         }
+    }
+
+    /**
+     * 根据图片名得到 MIME 类型
+     *
+     * @param imageName 图片名
+     * @return MIME String
+     */
+    private static String getMime(String imageName) {
+        String extension = getFileExtension(imageName);
+        String mime;
+        if (extension != null) {
+            mime = switch (extension) {
+                case "jpg", "jpeg" -> "jpeg";
+                case "png" -> "png";
+                case "gif" -> "gif";
+                case "svg" -> "svg+xml";
+                default -> throw new IllegalStateException("图片格式不支持: " + imageName);
+            };
+        } else {
+            throw new IllegalStateException("图片格式不支持: " + imageName);
+        }
+        return mime;
     }
 
     /**
