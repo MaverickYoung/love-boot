@@ -2,17 +2,17 @@ package com.yuan.loveboot.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.yuan.loveboot.enums.ResponseCode;
-import com.yuan.loveboot.exception.ServerException;
-import com.yuan.loveboot.mybatis.service.impl.BaseServiceImpl;
-import com.yuan.loveboot.properties.SecurityProperties;
+import com.yuan.loveboot.common.enums.ResponseCode;
+import com.yuan.loveboot.common.exception.ServerException;
+import com.yuan.loveboot.common.mybatis.service.impl.BaseServiceImpl;
+import com.yuan.loveboot.common.properties.SecurityProperties;
+import com.yuan.loveboot.common.utils.TokenUtil;
 import com.yuan.loveboot.system.convert.SysUserTokenConvert;
 import com.yuan.loveboot.system.dao.SysUserTokenDao;
 import com.yuan.loveboot.system.po.SysUserToken;
 import com.yuan.loveboot.system.service.SysCacheService;
 import com.yuan.loveboot.system.service.SysUserTokenService;
 import com.yuan.loveboot.system.vo.SysUserTokenVO;
-import com.yuan.loveboot.utils.TokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

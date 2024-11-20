@@ -3,9 +3,11 @@ package com.yuan.loveboot.poop.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.yuan.loveboot.enums.ResponseCode;
-import com.yuan.loveboot.exception.ServerException;
-import com.yuan.loveboot.mybatis.service.impl.BaseServiceImpl;
+import com.yuan.loveboot.common.enums.ResponseCode;
+import com.yuan.loveboot.common.exception.ServerException;
+import com.yuan.loveboot.common.mybatis.service.impl.BaseServiceImpl;
+import com.yuan.loveboot.common.utils.FileUtil;
+import com.yuan.loveboot.common.utils.YearMonthRange;
 import com.yuan.loveboot.poop.convert.PoopSummaryConvert;
 import com.yuan.loveboot.poop.dao.PoopSummaryDao;
 import com.yuan.loveboot.poop.po.PoopSummary;
@@ -14,8 +16,6 @@ import com.yuan.loveboot.poop.service.PoopSummaryService;
 import com.yuan.loveboot.poop.vo.PoopRewardVO;
 import com.yuan.loveboot.poop.vo.PoopSummaryVO;
 import com.yuan.loveboot.system.service.SysCacheService;
-import com.yuan.loveboot.utils.FileUtil;
-import com.yuan.loveboot.utils.YearMonthRange;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -80,7 +80,7 @@ public class PoopSummaryServiceImpl extends BaseServiceImpl<PoopSummaryDao, Poop
         LambdaUpdateWrapper<PoopSummary> updateWrapper = new LambdaUpdateWrapper<>();
         updateWrapper.eq(PoopSummary::getMonth, lastMonthStr)
                 .in(PoopSummary::getUserId, list)
-                .set(PoopSummary::getIsWinner, true);
+                .set(PoopSummary::getWinnerStatus, true);
 
         // 执行更新
         baseMapper.update(null, updateWrapper);
@@ -119,7 +119,7 @@ public class PoopSummaryServiceImpl extends BaseServiceImpl<PoopSummaryDao, Poop
     public List<PoopRewardVO> findRewardByMonth(YearMonth month) {
         LambdaQueryWrapper<PoopSummary> query = Wrappers.lambdaQuery();
         query.eq(PoopSummary::getMonth, month);
-        query.eq(PoopSummary::getIsWinner, true);
+        query.eq(PoopSummary::getWinnerStatus, true);
 
         List<PoopSummary> list = baseMapper.selectList(query);
         return PoopSummaryConvert.INSTANCE.convertReward(list);
@@ -135,7 +135,7 @@ public class PoopSummaryServiceImpl extends BaseServiceImpl<PoopSummaryDao, Poop
         LambdaQueryWrapper<PoopSummary> query = Wrappers.lambdaQuery();
         query.eq(PoopSummary::getMonth, month)
                 .eq(PoopSummary::getUserId, userId)
-                .eq(PoopSummary::getIsWinner, true);
+                .eq(PoopSummary::getWinnerStatus, true);
         PoopSummary poopSummary = baseMapper.selectOne(query);
         if (poopSummary == null) {
             throw new ServerException("参数异常");
@@ -146,7 +146,7 @@ public class PoopSummaryServiceImpl extends BaseServiceImpl<PoopSummaryDao, Poop
 
         // 更新奖励图片和状态
         poopSummary.setRewardImage(imageName);
-        poopSummary.setIsRewarded(true);
+        poopSummary.setRewardStatus(true);
         updateById(poopSummary);
     }
 }

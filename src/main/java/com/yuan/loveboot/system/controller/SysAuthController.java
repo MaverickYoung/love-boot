@@ -1,12 +1,12 @@
 package com.yuan.loveboot.system.controller;
 
+import com.yuan.loveboot.common.utils.Result;
 import com.yuan.loveboot.system.dto.SysAccountLoginDTO;
 import com.yuan.loveboot.system.service.SysAuthService;
 import com.yuan.loveboot.system.service.SysCaptchaService;
 import com.yuan.loveboot.system.service.SysUserTokenService;
 import com.yuan.loveboot.system.vo.SysCaptchaVO;
 import com.yuan.loveboot.system.vo.SysUserTokenVO;
-import com.yuan.loveboot.utils.Result;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

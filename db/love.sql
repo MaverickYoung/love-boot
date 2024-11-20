@@ -114,19 +114,19 @@ comment on column poop_log.update_time is '更新时间';
 
 create table poop_summary
 (
-    id           serial     not null,
-    month        varchar(7) not null,
-    user_id      int        not null,
-    poop_count   int        not null default 0,
-    is_winner    boolean    not null default false,
-    is_rewarded  boolean    not null default false,
-    reward_image varchar(255),
-    version      int        not null default 0,
-    is_deleted   boolean    not null default false,
-    creator      int,
-    create_time  timestamp  not null,
-    updater      int,
-    update_time  timestamp  not null,
+    id            serial     not null,
+    month         varchar(7) not null,
+    user_id       int        not null,
+    poop_count    int        not null default 0,
+    winner_status boolean    not null default false,
+    reward_status boolean    not null default false,
+    reward_image  varchar(255),
+    version       int        not null default 0,
+    is_deleted    boolean    not null default false,
+    creator       int,
+    create_time   timestamp  not null,
+    updater       int,
+    update_time   timestamp  not null,
     primary key (id),
     unique (month, user_id)
 );
@@ -137,8 +137,8 @@ comment on column poop_summary.id is 'id';
 comment on column poop_summary.month is '统计月份，格式为 YYYY-MM';
 comment on column poop_summary.user_id is '用户ID';
 comment on column poop_summary.poop_count is '用户当月的便便数量';
-comment on column poop_summary.is_winner is '是否为当月冠军';
-comment on column poop_summary.is_rewarded is '是否领取奖品';
+comment on column poop_summary.winner_status is '是否为当月冠军';
+comment on column poop_summary.reward_status is '是否领取奖品';
 comment on column poop_summary.reward_image is '奖品图片名称';
 comment on column poop_summary.version is '乐观锁';
 comment on column poop_summary.is_deleted is '是否删除';

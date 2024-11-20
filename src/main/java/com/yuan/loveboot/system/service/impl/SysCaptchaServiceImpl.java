@@ -1,9 +1,9 @@
 package com.yuan.loveboot.system.service.impl;
 
 import com.wf.captcha.SpecCaptcha;
+import com.yuan.loveboot.common.utils.TokenUtil;
 import com.yuan.loveboot.system.service.SysCaptchaService;
 import com.yuan.loveboot.system.vo.SysCaptchaVO;
-import com.yuan.loveboot.utils.TokenUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

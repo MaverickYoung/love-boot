@@ -1,6 +1,6 @@
 package com.yuan.loveboot.poop.po;
 
-import com.yuan.loveboot.mybatis.po.BasePO;
+import com.yuan.loveboot.common.mybatis.po.BasePO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

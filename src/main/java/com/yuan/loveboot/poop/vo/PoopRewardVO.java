@@ -18,7 +18,7 @@ public class PoopRewardVO {
     private int userId;
 
     @Schema(description = "是否领取奖品")
-    private boolean isRewarded;
+    private boolean rewardStatus;
 
     @Schema(description = "奖励图片")
     private String rewardImage;

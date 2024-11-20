@@ -1,9 +1,9 @@
 package com.yuan.loveboot.poop.convert;
 
+import com.yuan.loveboot.common.utils.FileUtil;
 import com.yuan.loveboot.poop.po.PoopSummary;
 import com.yuan.loveboot.poop.vo.PoopRewardVO;
 import com.yuan.loveboot.poop.vo.PoopSummaryVO;
-import com.yuan.loveboot.utils.FileUtil;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

@@ -1,7 +1,7 @@
 package com.yuan.loveboot.system.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.yuan.loveboot.mybatis.po.BasePO;
+import com.yuan.loveboot.common.mybatis.po.BasePO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

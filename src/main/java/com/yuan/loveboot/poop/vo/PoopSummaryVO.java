@@ -21,5 +21,5 @@ public class PoopSummaryVO {
     private int poopCount;
 
     @Schema(description = "是否是冠军")
-    private boolean isWinner;
+    private boolean winnerStatus;
 }

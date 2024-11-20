@@ -17,7 +17,7 @@
     </select>
 
     <select id="selectWithNicknameByMonth" resultType="com.yuan.loveboot.poop.vo.PoopSummaryVO">
-        SELECT p.user_id, u.nickname, p.poop_count, p.is_winner
+        SELECT p.user_id, u.nickname, p.poop_count, p.winner_status
         FROM poop_summary p
         JOIN sys_user u ON p.user_id = u.id
         WHERE p.is_deleted = false

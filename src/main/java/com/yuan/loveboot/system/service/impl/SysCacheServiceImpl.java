@@ -1,7 +1,7 @@
 package com.yuan.loveboot.system.service.impl;
 
 
-import com.yuan.loveboot.config.CacheConfig;
+import com.yuan.loveboot.common.config.CacheConfig;
 import com.yuan.loveboot.system.service.SysCacheService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

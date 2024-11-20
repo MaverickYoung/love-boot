@@ -1,10 +1,10 @@
 package com.yuan.loveboot.poop.controller;
 
+import com.yuan.loveboot.common.utils.PageDTO;
+import com.yuan.loveboot.common.utils.PageVO;
+import com.yuan.loveboot.common.utils.Result;
 import com.yuan.loveboot.poop.service.PoopLogService;
 import com.yuan.loveboot.poop.vo.PoopLogVO;
-import com.yuan.loveboot.utils.PageDTO;
-import com.yuan.loveboot.utils.PageVO;
-import com.yuan.loveboot.utils.Result;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Max;

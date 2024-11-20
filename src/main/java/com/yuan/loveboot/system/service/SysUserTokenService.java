@@ -1,6 +1,6 @@
 package com.yuan.loveboot.system.service;
 
-import com.yuan.loveboot.mybatis.service.BaseService;
+import com.yuan.loveboot.common.mybatis.service.BaseService;
 import com.yuan.loveboot.system.po.SysUserToken;
 import com.yuan.loveboot.system.vo.SysUserTokenVO;
 

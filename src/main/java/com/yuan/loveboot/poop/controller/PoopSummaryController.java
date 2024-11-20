@@ -1,10 +1,10 @@
 package com.yuan.loveboot.poop.controller;
 
+import com.yuan.loveboot.common.utils.Result;
+import com.yuan.loveboot.common.utils.YearMonthRange;
 import com.yuan.loveboot.poop.service.PoopSummaryService;
 import com.yuan.loveboot.poop.vo.PoopRewardVO;
 import com.yuan.loveboot.poop.vo.PoopSummaryVO;
-import com.yuan.loveboot.utils.Result;
-import com.yuan.loveboot.utils.YearMonthRange;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

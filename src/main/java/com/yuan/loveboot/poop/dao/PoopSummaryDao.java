@@ -1,9 +1,9 @@
 package com.yuan.loveboot.poop.dao;
 
-import com.yuan.loveboot.mybatis.dao.BaseDao;
+import com.yuan.loveboot.common.mybatis.dao.BaseDao;
+import com.yuan.loveboot.common.utils.YearMonthRange;
 import com.yuan.loveboot.poop.po.PoopSummary;
 import com.yuan.loveboot.poop.vo.PoopSummaryVO;
-import com.yuan.loveboot.utils.YearMonthRange;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

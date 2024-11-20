@@ -1,6 +1,6 @@
 package com.yuan.loveboot.system.dto;
 
-import com.yuan.loveboot.validation.OptionalSize;
+import com.yuan.loveboot.common.validation.OptionalSize;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;

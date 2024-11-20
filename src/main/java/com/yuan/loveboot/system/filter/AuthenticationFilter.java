@@ -1,10 +1,10 @@
 package com.yuan.loveboot.system.filter;
 
-import com.yuan.loveboot.config.PermitResource;
-import com.yuan.loveboot.enums.ResponseCode;
+import com.yuan.loveboot.common.config.PermitResource;
+import com.yuan.loveboot.common.enums.ResponseCode;
+import com.yuan.loveboot.common.utils.JsonUtil;
+import com.yuan.loveboot.common.utils.Result;
 import com.yuan.loveboot.system.service.SysCacheService;
-import com.yuan.loveboot.utils.JsonUtil;
-import com.yuan.loveboot.utils.Result;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

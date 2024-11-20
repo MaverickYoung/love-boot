@@ -1,7 +1,7 @@
 package com.yuan.loveboot.poop.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.yuan.loveboot.utils.DateUtil;
+import com.yuan.loveboot.common.utils.DateUtil;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

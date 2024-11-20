@@ -1,6 +1,6 @@
 package com.yuan.loveboot.poop.po;
 
-import com.yuan.loveboot.mybatis.po.BasePO;
+import com.yuan.loveboot.common.mybatis.po.BasePO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -30,12 +30,12 @@ public class PoopSummary extends BasePO {
     /**
      * 是否为当月冠军
      */
-    private Boolean isWinner;
+    private Boolean winnerStatus;
 
     /**
      * 是否领取奖品
      */
-    private Boolean isRewarded;
+    private Boolean rewardStatus;
 
     /**
      * 奖品图片名称
