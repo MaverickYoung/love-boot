@@ -16,19 +16,4 @@
                               AND is_deleted = false);
     </select>
 
-    <select id="selectWithNicknameByMonth" resultType="com.yuan.loveboot.poop.vo.PoopSummaryVO">
-        SELECT p.user_id, u.nickname, p.poop_count, p.winner_status
-        FROM poop_summary p
-        JOIN sys_user u ON p.user_id = u.id
-        WHERE p.is_deleted = false
-        <if test="start != null and end != null and start == end">
-            p.month = to_date(#{startMonth}, 'YYYY-MM')
-        </if>
-        <if test=" start != null and start != end">
-            AND p.month &gt;= to_date(#{startMonth}, 'YYYY-MM')
-        </if>
-        <if test=" end != null and start != end ">
-            AND p.month &lt;= to_date(#{endMonth}, 'YYYY-MM')
-        </if>;
-    </select>
 </mapper>

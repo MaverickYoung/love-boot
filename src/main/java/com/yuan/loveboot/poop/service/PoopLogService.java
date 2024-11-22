@@ -8,6 +8,7 @@ import com.yuan.loveboot.common.utils.YearMonthRange;
 import com.yuan.loveboot.poop.po.PoopLog;
 import com.yuan.loveboot.poop.po.PoopSummary;
 import com.yuan.loveboot.poop.vo.PoopLogVO;
+import com.yuan.loveboot.poop.vo.PoopStatsVO;
 
 import java.util.List;
 
@@ -24,6 +25,14 @@ public interface PoopLogService extends BaseService<PoopLog> {
      * @return 统计结果
      */
     List<PoopSummary> countByMonth(YearMonthRange range);
+
+    /**
+     * 获取便便统计
+     *
+     * @param range 查询范围
+     * @return 统计结果
+     */
+    List<PoopStatsVO> fetchStats(YearMonthRange range);
 
     /**
      * 查找可用月份

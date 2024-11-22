@@ -4,6 +4,7 @@ import com.yuan.loveboot.common.mybatis.dao.BaseDao;
 import com.yuan.loveboot.common.utils.YearMonthRange;
 import com.yuan.loveboot.poop.po.PoopLog;
 import com.yuan.loveboot.poop.po.PoopSummary;
+import com.yuan.loveboot.poop.vo.PoopStatsVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.time.YearMonth;
@@ -22,7 +23,7 @@ public interface PoopLogDao extends BaseDao<PoopLog> {
      * @param range 查询范围
      * @return 统计结果
      */
-    List<PoopSummary> countByMonth(YearMonthRange range);
+    List<PoopSummary> selectMonthlySummary(YearMonthRange range);
 
     /**
      * 统计存在的月份
@@ -31,5 +32,11 @@ public interface PoopLogDao extends BaseDao<PoopLog> {
      */
     List<YearMonth> selectDistinctMonths();
 
-
+    /**
+     * 按月与便便类型统计便便数量
+     *
+     * @param range 查询范围
+     * @return 统计结果
+     */
+    List<PoopStatsVO> selectMonthlyStats(YearMonthRange range);
 }

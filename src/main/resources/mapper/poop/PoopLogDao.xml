@@ -5,7 +5,7 @@
 
 <mapper namespace="com.yuan.loveboot.poop.dao.PoopLogDao">
 
-    <select id="countByMonth" resultType="com.yuan.loveboot.poop.po.PoopSummary">
+    <select id="selectMonthlySummary" resultType="com.yuan.loveboot.poop.po.PoopSummary">
         SELECT
         to_char(log_time, 'YYYY-MM') AS month,
         user_id,
@@ -22,6 +22,29 @@
             AND to_char(log_time, 'YYYY-MM') &lt;=#{end}
         </if>
         GROUP BY month, user_id
+        ORDER BY month, user_id
+    </select>
+
+    <select id="selectMonthlyStats" resultType="com.yuan.loveboot.poop.vo.PoopStatsVO">
+        SELECT
+        to_char(log_time, 'YYYY-MM') AS month,
+        user_id,
+        nickname,
+        poop_type,
+        COUNT(*) AS poop_count
+        FROM poop_log l
+        LEFT JOIN sys_user u ON l.user_id = u.id
+        WHERE l.is_deleted = false
+        <if test="start != null and end != null and start == end">
+            AND to_char(log_time, 'YYYY-MM') =#{start}
+        </if>
+        <if test=" start != null and start != end">
+            AND to_char(log_time, 'YYYY-MM') &gt;= #{start}
+        </if>
+        <if test=" end != null and start != end ">
+            AND to_char(log_time, 'YYYY-MM') &lt;=#{end}
+        </if>
+        GROUP BY month, user_id, nickname, poop_type
         ORDER BY month, user_id
     </select>
 

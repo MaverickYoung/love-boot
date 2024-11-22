@@ -12,6 +12,7 @@ import com.yuan.loveboot.poop.po.PoopLog;
 import com.yuan.loveboot.poop.po.PoopSummary;
 import com.yuan.loveboot.poop.service.PoopLogService;
 import com.yuan.loveboot.poop.vo.PoopLogVO;
+import com.yuan.loveboot.poop.vo.PoopStatsVO;
 import com.yuan.loveboot.system.service.SysCacheService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,12 @@ public class PoopLogServiceImpl extends BaseServiceImpl<PoopLogDao, PoopLog> imp
 
     @Override
     public List<PoopSummary> countByMonth(YearMonthRange range) {
-        return baseMapper.countByMonth(range);
+        return baseMapper.selectMonthlySummary(range);
+    }
+
+    @Override
+    public List<PoopStatsVO> fetchStats(YearMonthRange range) {
+        return baseMapper.selectMonthlyStats(range);
     }
 
     @Override

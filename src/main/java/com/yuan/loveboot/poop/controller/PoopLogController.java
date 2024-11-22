@@ -3,9 +3,12 @@ package com.yuan.loveboot.poop.controller;
 import com.yuan.loveboot.common.utils.PageDTO;
 import com.yuan.loveboot.common.utils.PageVO;
 import com.yuan.loveboot.common.utils.Result;
+import com.yuan.loveboot.common.utils.YearMonthRange;
 import com.yuan.loveboot.poop.service.PoopLogService;
 import com.yuan.loveboot.poop.vo.PoopLogVO;
+import com.yuan.loveboot.poop.vo.PoopStatsVO;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -44,6 +47,16 @@ public class PoopLogController {
         dto.setAsc(true);
         dto.setOrder("log_time");
         return poopLogService.page(dto);
+    }
+
+    @GetMapping("list")
+    @Operation(summary = "获取便便统计")
+    public Result<List<PoopStatsVO>> getList(@Parameter(description = "起始年月 YYYY-MM") @RequestParam(required = false) String start,
+                                             @Parameter(description = "结束年月 YYYY-MM") @RequestParam(required = false) String end) {
+        YearMonthRange range = new YearMonthRange(start, end);
+        List<PoopStatsVO> list = poopLogService.fetchStats(range);
+
+        return Result.ok(list);
     }
 
     @PostMapping
