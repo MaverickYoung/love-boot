@@ -29,6 +29,10 @@ public class OptionalSizeValidator implements ConstraintValidator<OptionalSize, 
      */
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
+        if (value == null) {
+            return true;
+        }
+
         // 检查是否允许包含空格
         if (!allowSpaces && value.contains(" ")) {
             return false;

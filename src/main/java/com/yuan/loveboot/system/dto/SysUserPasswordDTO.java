@@ -24,6 +24,7 @@ public class SysUserPasswordDTO implements Serializable {
     private String password;
 
     @Schema(description = "新密码")
+    @NotBlank(message = "新密码不能为空")
     @OptionalSize(min = 4, max = 20, message = "新密码不合规")
     private String newPassword;
 
