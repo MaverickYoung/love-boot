@@ -5,7 +5,7 @@ create table sys_user
     password    varchar(100) not null,
     nickname    varchar(50)  not null,
     avatar      varchar(200) not null,
-    background  varchar(200) not null,
+    background  varchar(200),
     gender      int          not null,
     version     int          not null default 0,
     is_deleted  boolean      not null default false,

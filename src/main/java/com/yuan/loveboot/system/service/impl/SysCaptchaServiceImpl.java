@@ -7,6 +7,7 @@ import com.yuan.loveboot.system.vo.SysCaptchaVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 
@@ -21,6 +22,9 @@ import org.springframework.stereotype.Service;
 public class SysCaptchaServiceImpl implements SysCaptchaService {
 
     private final SysCacheServiceImpl sysCacheService;
+
+    @Value("${love.enableCaptcha}")
+    private boolean captchaEnable;
 
     @Override
     public SysCaptchaVO generate() {
@@ -47,7 +51,7 @@ public class SysCaptchaServiceImpl implements SysCaptchaService {
 
     @Override
     public boolean isCaptchaEnabled() {
-        return true;
+        return captchaEnable;
     }
 
     @Override

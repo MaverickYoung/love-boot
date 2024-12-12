@@ -11,13 +11,13 @@ spring:
 
     # Postgres
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://192.168.31.12:5432/db_love_test
+    url: jdbc:postgresql://192.168.31.12:5432/db_love
     username: root
     password: root
 
 storage:
   dir:
-    base: E:/projects/love/upload
+    base: /app/upload
     reward: ${storage.dir.base}/image/reward
     avatar: ${storage.dir.base}/image/avatar
     background: ${storage.dir.base}/image/background
@@ -25,11 +25,9 @@ storage:
   path:
     defaultAvatar: ${storage.dir.avatar}/default.jpg
 
-
-
 love:
-  enableCaptcha: false
-  allowRegistration: true
+  enableCaptcha: true
+  allowRegistration: false
 
 #mybatis-plus:
 #  configuration:

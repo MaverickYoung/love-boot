@@ -13,3 +13,4 @@ auth:
     - /sys/auth/login
     - /sys/auth/token
     - /sys/user/register
+    - /

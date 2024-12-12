@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,6 +31,9 @@ import java.util.List;
 @Tag(name = "用户管理")
 public class SysUserController {
     private final SysUserService sysUserService;
+
+    @Value("${love.allowRegistration}")
+    private boolean allowRegistration;
 
     @GetMapping("profile")
     @Operation(summary = "获取用户头像和昵称")
@@ -82,6 +86,10 @@ public class SysUserController {
     @PostMapping("/register")
     @Operation(summary = "注册用户")
     public Result<String> save(@RequestBody @Valid SysUserDTO dto) {
+        if (!allowRegistration) {
+            return Result.error("未开启注册");
+        }
+
         sysUserService.save(dto);
 
         return Result.ok();
