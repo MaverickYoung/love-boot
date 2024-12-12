@@ -38,6 +38,13 @@ public interface SysUserService extends BaseService<SysUser> {
     void updateAvatar(MultipartFile file);
 
     /**
+     * 更新当前用户背景图
+     *
+     * @param file 背景图
+     */
+    void updateBackground(MultipartFile file);
+
+    /**
      * 更新密码
      *
      * @param dto 修改信息

@@ -63,6 +63,14 @@ public class SysUserController {
         return Result.ok();
     }
 
+    @PutMapping("background")
+    @Operation(summary = "修改当前用户背景图")
+    public Result<String> background(@Parameter(description = "背景图图片") @RequestParam("file") MultipartFile file) {
+        sysUserService.updateBackground(file);
+
+        return Result.ok();
+    }
+
     @PutMapping("password")
     @Operation(summary = "修改密码")
     public Result<String> password(@RequestBody @Valid SysUserPasswordDTO dto) {

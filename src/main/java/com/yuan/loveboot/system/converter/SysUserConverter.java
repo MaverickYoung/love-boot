@@ -14,11 +14,12 @@ import org.mapstruct.factory.Mappers;
 import java.util.List;
 
 
-@Mapper(componentModel = "spring", uses =  FileUtil.class)
+@Mapper(componentModel = "spring", uses = FileUtil.class)
 public interface SysUserConverter extends BaseConverter {
     SysUserConverter INSTANCE = Mappers.getMapper(SysUserConverter.class);
 
     @Mapping(target = "avatar", source = "avatar", qualifiedByName = "imageAsBase64")
+    @Mapping(target = "background", source = "background", qualifiedByName = "imageAsBase64")
     SysUserVO convert(SysUser entity);
 
     SysUser convert(SysUserDTO dto);

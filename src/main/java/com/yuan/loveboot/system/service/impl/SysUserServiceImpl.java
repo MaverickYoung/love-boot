@@ -100,6 +100,17 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUser> imp
     }
 
     @Override
+    public void updateBackground(MultipartFile file) {
+        SysUser entity = new SysUser();
+        int userId = sysCacheService.getUserId();
+        String background = fileUtil.saveBackgroundImage(file, userId);
+
+        entity.setId(userId);
+        entity.setBackground(background);
+        updateById(entity);
+    }
+
+    @Override
     public void updatePassword(SysUserPasswordDTO dto) {
         String password = AesPasswordEncoder.encode(dto.getPassword());
         String newPassword = AesPasswordEncoder.encode(dto.getNewPassword());

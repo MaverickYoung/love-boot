@@ -10,6 +10,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.format.DateTimeParseException;
@@ -56,6 +57,14 @@ public class ServerExceptionHandler {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public Result<String> missingParamException(MissingServletRequestParameterException e) {
         return Result.error(ResponseCode.VALIDATION_ERROR, String.format("缺少必要请求参数 %s", e.getParameterName()));
+    }
+
+    /**
+     * SpringMVC 请求体缺少文件部分
+     */
+    @ExceptionHandler(MissingServletRequestPartException.class)
+    public Result<String> missingPartParamException(MissingServletRequestPartException e) {
+        return Result.error(ResponseCode.VALIDATION_ERROR, String.format("缺少必要请求文件参数 %s", e.getRequestPartName()));
     }
 
     /**

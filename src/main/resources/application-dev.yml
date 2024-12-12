@@ -20,6 +20,7 @@ storage:
     base: D:/projects/love/upload
     reward: ${storage.dir.base}/image/reward
     avatar: ${storage.dir.base}/image/avatar
+    background: ${storage.dir.base}/image/background
     poop: ${storage.dir.base}/image/poop
   path:
     defaultAvatar: ${storage.dir.avatar}/default.png

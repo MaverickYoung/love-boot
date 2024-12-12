@@ -31,6 +31,8 @@ public class FileUtil {
     private String rewardDir;
     @Value("${storage.dir.avatar}")
     private String avatarDir;
+    @Value("${storage.dir.background}")
+    private String background;
 
     // 支持的图片格式
     private static final Set<String> SUPPORTED_IMAGE_TYPES = Set.of("jpg", "jpeg", "png", "gif", "svg");
@@ -45,16 +47,7 @@ public class FileUtil {
      */
     public String saveRewardImage(MultipartFile file, String month, int userId) {
         // 保存文件
-        long timestamp = Instant.now().getEpochSecond();
-        String fileName = String.format("%s_%d_%d.%s", month, userId, timestamp, getFileExtension(file.getOriginalFilename()));
-
-        String path;
-        try {
-            path = saveFile(file, fileName, rewardDir, SUPPORTED_IMAGE_TYPES);
-        } catch (IllegalArgumentException e) {
-            throw new ServerException(e.getMessage());
-        }
-        return path;
+        return saveUserImage(file, userId, month, rewardDir);
     }
 
     /**
@@ -66,12 +59,43 @@ public class FileUtil {
      */
     public String saveAvatarImage(MultipartFile file, int userId) {
         // 保存文件
+        return saveUserImage(file, userId, null, avatarDir);
+    }
+
+    /**
+     * 保存背景图片
+     *
+     * @param file   MultipartFile 文件
+     * @param userId 用户ID
+     * @return 文件路径
+     */
+    public String saveBackgroundImage(MultipartFile file, int userId) {
+        // 保存文件
+        return saveUserImage(file, userId, null, background);
+    }
+
+    /**
+     * 保存用户图片
+     *
+     * @param file   MultipartFile 文件
+     * @param userId 用户ID
+     * @param prefix 加入文件名的前缀
+     * @param dir    保存目录
+     * @return 文件路径
+     */
+    public String saveUserImage(MultipartFile file, int userId, String prefix, String dir) {
         long timestamp = Instant.now().getEpochSecond();
-        String fileName = String.format("%d_%d.%s", userId, timestamp, getFileExtension(file.getOriginalFilename()));
+        String fileName = String.format(
+                "%s%s_%d.%s",
+                prefix != null && !prefix.isEmpty() ? prefix + "_" : "",
+                userId,
+                timestamp,
+                getFileExtension(file.getOriginalFilename())
+        );
 
         String path;
         try {
-            path = saveFile(file, fileName, avatarDir, SUPPORTED_IMAGE_TYPES);
+            path = saveFile(file, fileName, dir, SUPPORTED_IMAGE_TYPES);
         } catch (IllegalArgumentException e) {
             throw new ServerException(e.getMessage());
         }

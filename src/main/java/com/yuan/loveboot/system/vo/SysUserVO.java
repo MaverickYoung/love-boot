@@ -26,6 +26,9 @@ public class SysUserVO implements Serializable {
     @Schema(description = "头像，base64")
     private String avatar;
 
+    @Schema(description = "背景图，base64")
+    private String background;
+
     @Schema(description = "性别")
     private int gender;
 

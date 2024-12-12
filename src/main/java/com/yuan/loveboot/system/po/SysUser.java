@@ -30,9 +30,14 @@ public class SysUser extends BasePO {
     private String nickname;
 
     /**
-     * 头像，base64
+     * 头像
      */
     private String avatar;
+
+    /**
+     * 背景图
+     */
+    private String background;
 
     /**
      * 性别
