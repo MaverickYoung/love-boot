@@ -8,13 +8,6 @@ ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 # 设置工作目录
 WORKDIR /app
 
-# 创建目录结构并添加默认文件
-RUN mkdir -p /app/upload/image/reward \
-    && mkdir -p /app/upload/image/avatar \
-    && mkdir -p /app/upload/image/background \
-    && mkdir -p /app/upload/image/poop \
-    && mkdir -p /app/logs
-
 # 将项目的 JAR 包复制到镜像中
 COPY love-boot.jar /app/app.jar
 
