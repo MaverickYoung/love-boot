@@ -1,6 +1,7 @@
 package com.yuan.loveboot.system.service.impl;
 
-import com.wf.captcha.SpecCaptcha;
+
+import com.yuan.loveboot.common.utils.SpecCaptcha;
 import com.yuan.loveboot.common.utils.TokenUtil;
 import com.yuan.loveboot.system.service.SysCaptchaService;
 import com.yuan.loveboot.system.vo.SysCaptchaVO;
@@ -33,7 +34,7 @@ public class SysCaptchaServiceImpl implements SysCaptchaService {
 
         // 生成验证码
         // 定义图形验证码的长、宽、验证码字符数
-        SpecCaptcha specCaptcha = new SpecCaptcha(150, 50, 5);
+        SpecCaptcha specCaptcha = new SpecCaptcha(150, 50, 4);
         String value = specCaptcha.text().toLowerCase();
         String image = specCaptcha.toBase64();
 
