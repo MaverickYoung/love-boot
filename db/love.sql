@@ -54,43 +54,43 @@ comment on column sys_user_token.refresh_token is '刷新令牌';
 comment on column sys_user_token.refresh_token_expire is '刷新令牌 过期时间';
 comment on column sys_user_token.create_time is '创建时间';
 
-create table sys_dict_type
+create table sys_user_group
 (
-    id          serial       not null,
-    dict_type   varchar(100) not null,
-    dict_label  varchar(255) not null,
-    dict_value  int          not null,
-    remark      varchar(255),
-    sort        int,
-    version     int          not null default 0,
-    is_deleted  boolean      not null default false,
+    id          serial    not null,
+    user1_id    int       not null,
+    user2_id    int       not null,
+    version     int       not null default 0,
+    is_deleted  boolean   not null default false,
     creator     int,
-    create_time timestamp    not null,
+    create_time timestamp not null,
     updater     int,
-    update_time timestamp    not null,
-    primary key (id)
+    update_time timestamp not null,
+    check (user1_id <> user2_id) -- 确保 user1_id 和 user2_id 不相同
 );
 
-comment on table sys_dict_type is '字典类型表';
+-- 创建唯一约束，确保 user1_id 和 user2_id 的组合在未删除的情况下是唯一的
+create unique index idx_unique_user_ids
+    on sys_user_group (least(user1_id, user2_id), greatest(user1_id, user2_id))
+    where is_deleted = false;
 
-comment on column sys_dict_type.id is 'id';
-comment on column sys_dict_type.dict_type is '字典类型';
-comment on column sys_dict_type.dict_label is '字典标签（显示值）';
-comment on column sys_dict_type.dict_value is '字典值';
-comment on column sys_dict_type.remark is '备注';
-comment on column sys_dict_type.sort is '排序';
-comment on column sys_dict_type.version is '版本号';
-comment on column sys_dict_type.is_deleted is '是否删除 ';
-comment on column sys_dict_type.creator is '创建者';
-comment on column sys_dict_type.create_time is '创建时间';
-comment on column sys_dict_type.updater is '更新者';
-comment on column sys_dict_type.update_time is '更新时间';
+comment on table sys_user_group is '用户分组表';
+
+comment on column sys_user_group.id is 'id';
+comment on column sys_user_group.user1_id is '用户1 ID';
+comment on column sys_user_group.user2_id is '用户2 ID';
+comment on column sys_user_group.version is '乐观锁';
+comment on column sys_user_group.is_deleted is '是否删除';
+comment on column sys_user_group.creator is '创建者';
+comment on column sys_user_group.create_time is '创建时间';
+comment on column sys_user_group.updater is '更新者';
+comment on column sys_user_group.update_time is '更新时间';
 
 create table poop_log
 (
     id          serial    not null,
     user_id     int       not null,
-    log_time    timestamp not null,
+    start_time  timestamp not null,
+    duration    interval,
     poop_type   int       not null,
     version     int       not null default 0,
     is_deleted  boolean   not null default false,
@@ -105,7 +105,8 @@ comment on table poop_log is '便便记录表';
 
 comment on column poop_log.id is 'id';
 comment on column poop_log.user_id is '用户ID';
-comment on column poop_log.log_time is '记录时间';
+comment on column poop_log.start_time is '便便开始时间';
+comment on column poop_log.duration is '便便时长';
 comment on column poop_log.poop_type is '便便类型';
 comment on column poop_log.version is '版本号';
 comment on column poop_log.is_deleted is '是否删除 ';

@@ -49,10 +49,19 @@ public interface PoopLogService extends BaseService<PoopLog> {
      */
     Result<PageVO<PoopLogVO>> page(PageDTO dto);
 
+
     /**
-     * 保存便便记录
+     * 结束便便
+     *
+     * @param id 便便记录 ID
+     */
+    void stopPoop(int id);
+
+    /**
+     * 开始便便
      *
      * @param type 便便类型
+     * @return id
      */
-    void save(int type);
+    int startPoop(int type);
 }

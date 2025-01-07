@@ -44,6 +44,6 @@ sudo mkdir -p "$UPLOAD_PATH/image/reward" \
   "$UPLOAD_PATH/logs"
 
 # 复制默认图片
-cp default.jpg "$UPLOAD_PATH/image/avatar/default.jpg"
+sudo cp default.jpg "$UPLOAD_PATH/image/avatar/default.jpg"
 
 echo "操作完成"

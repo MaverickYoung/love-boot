@@ -22,6 +22,13 @@ public interface SysCacheService {
     Integer getUserId();
 
     /**
+     * 通过 访问令牌 获取用户ID
+     *
+     * @return 用户ID
+     */
+    Integer getUserId(String accessToken);
+
+    /**
      * 删除 访问令牌 缓存
      *
      * @param userId 用户ID

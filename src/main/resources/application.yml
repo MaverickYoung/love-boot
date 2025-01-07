@@ -23,7 +23,7 @@ knife4j:
 spring:
   # 环境 dev|test|prod
   profiles:
-    active: prod
+    active: dev
   application:
     name: love-boot
   jackson:

@@ -3,7 +3,6 @@ package com.yuan.loveboot.poop.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.yuan.loveboot.common.enums.ResponseCode;
 import com.yuan.loveboot.common.exception.ServerException;
 import com.yuan.loveboot.common.mybatis.service.impl.BaseServiceImpl;
 import com.yuan.loveboot.common.utils.FileUtil;
@@ -129,9 +128,6 @@ public class PoopSummaryServiceImpl extends BaseServiceImpl<PoopSummaryDao, Poop
     @Override
     public void updateReward(MultipartFile file, YearMonth month) {
         Integer userId = sysCacheService.getUserId();
-        if (userId == null) {
-            throw new ServerException(ResponseCode.ACCESS_TOKEN_INVALID);
-        }
 
         LambdaQueryWrapper<PoopSummary> query = Wrappers.lambdaQuery();
         query.eq(PoopSummary::getMonth, month)

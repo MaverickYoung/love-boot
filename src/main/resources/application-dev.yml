@@ -11,13 +11,13 @@ spring:
 
     # Postgres
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://192.168.31.12:5432/db_love_test
-    username: root
-    password: root
+    url: jdbc:postgresql://localhost:5432/db_love
+    username: postgres
+    password: y9C6ZEZWw7
 
 storage:
   dir:
-    base: E:/projects/love/upload
+    base: D:/projects/love/upload
     reward: ${storage.dir.base}/image/reward
     avatar: ${storage.dir.base}/image/avatar
     background: ${storage.dir.base}/image/background
@@ -25,7 +25,8 @@ storage:
   path:
     defaultAvatar: ${storage.dir.avatar}/default.jpg
 
-
+knife4j:
+  production: false
 
 love:
   enableCaptcha: false

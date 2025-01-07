@@ -60,10 +60,10 @@ public class PoopLogController {
     }
 
     @PostMapping
-    @Operation(summary = "保存便便记录")
-    public Result<String> save(@RequestParam int type) {
-        poopLogService.save(type);
+    @Operation(summary = "开始便便")
+    public Result<Integer> startPoop(@RequestParam int type) {
+        int id = poopLogService.startPoop(type);
 
-        return Result.ok();
+        return Result.ok(id);
     }
 }

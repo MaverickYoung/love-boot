@@ -4,6 +4,7 @@ import com.yuan.loveboot.common.mybatis.po.BasePO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 /**
@@ -19,9 +20,13 @@ public class PoopLog extends BasePO {
      */
     private Integer userId;
     /**
-     * 记录时间
+     * 便便开始时间
      */
-    private LocalDateTime logTime;
+    private LocalDateTime startTime;
+    /**
+     * 便便时长
+     */
+    private Duration duration;
     /**
      * 便便类型
      */

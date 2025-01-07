@@ -30,6 +30,11 @@ public class SysCacheServiceImpl implements SysCacheService {
     @Override
     public Integer getUserId() {
         String accessToken = request.getHeader(HttpHeaders.AUTHORIZATION);
+        return getUserId(accessToken);
+    }
+
+    @Override
+    public Integer getUserId(String accessToken) {
         if (StringUtils.isBlank(accessToken)) {
             return null;
         }
