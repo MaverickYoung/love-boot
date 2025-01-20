@@ -21,9 +21,4 @@ public interface PoopSseService {
      * @param vo     消息内容
      */
     void sendMessage(int userId, PoopUserStateVO vo);
-
-    /**
-     * 发送心跳包
-     */
-    void sendHeartbeats();
 }
