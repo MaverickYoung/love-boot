@@ -10,6 +10,9 @@ import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.Objects;
 
@@ -20,7 +23,6 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class SysCacheServiceImpl implements SysCacheService {
     private final CacheManager cacheManager;
-    private final HttpServletRequest request;
 
     @Override
     public void cacheAccessToken(int userId, String accessToken) {
@@ -29,6 +31,13 @@ public class SysCacheServiceImpl implements SysCacheService {
 
     @Override
     public Integer getUserId() {
+        // 尝试从当前线程获取请求上下文
+        RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
+        if (attributes == null) {
+            // 非 Web 请求环境下（如定时任务）返回默认值
+            return null; // 或者返回一个特定的默认用户ID，如 0
+        }
+        HttpServletRequest request = ((ServletRequestAttributes) attributes).getRequest();
         String accessToken = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (StringUtils.isBlank(accessToken)) {
             return null;
@@ -39,9 +48,11 @@ public class SysCacheServiceImpl implements SysCacheService {
         if (valueWrapper == null) {
             return null;
         }
+
         // 返回缓存中的 userId
         return (Integer) valueWrapper.get();
     }
+
 
     @Override
     public void deleteAccessToken(int userId) {

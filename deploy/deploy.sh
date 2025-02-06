@@ -21,10 +21,6 @@ if ! sudo docker build -t love-boot .; then
   exit 1
 fi
 
-# 删除 config、logs 和 upload 文件夹
-echo "删除 config、logs 和 upload 文件夹"
-sudo rm -rf "$CONFIG_PATH" "$LOGS_PATH" "$UPLOAD_PATH"
-
 # 启动新的 Docker 容器
 echo "启动新的容器 love-boot"
 if ! sudo docker run -d -p 8101:8080 \
@@ -44,6 +40,6 @@ sudo mkdir -p "$UPLOAD_PATH/image/reward" \
   "$UPLOAD_PATH/logs"
 
 # 复制默认图片
-cp default.jpg "$UPLOAD_PATH/image/avatar/default.jpg"
+sudo cp default.jpg "$UPLOAD_PATH/image/avatar/default.jpg"
 
 echo "操作完成"
