@@ -2,6 +2,7 @@ package com.yuan.loveboot.system.controller;
 
 import com.yuan.loveboot.common.utils.Result;
 import com.yuan.loveboot.system.dto.SysAccountLoginDTO;
+import com.yuan.loveboot.system.dto.SysTokenDTO;
 import com.yuan.loveboot.system.service.SysAuthService;
 import com.yuan.loveboot.system.service.SysCaptchaService;
 import com.yuan.loveboot.system.service.SysUserTokenService;
@@ -53,8 +54,8 @@ public class SysAuthController {
 
     @PostMapping("token")
     @Operation(summary = "获取 访问令牌")
-    public Result<SysUserTokenVO> token(String refreshToken) {
-        SysUserTokenVO token = sysUserTokenService.refreshToken(refreshToken);
+    public Result<SysUserTokenVO> token(@RequestBody SysTokenDTO dto) {
+        SysUserTokenVO token = sysUserTokenService.refreshToken(dto.getRefreshToken());
 
         return Result.ok(token);
     }

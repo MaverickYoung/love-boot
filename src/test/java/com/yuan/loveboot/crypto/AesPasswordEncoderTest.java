@@ -13,6 +13,6 @@ class AesPasswordEncoderTest {
 
     @Test
     void decryptTest() {
-        System.out.println(encoder.decrypt("5hHjqDbC/cL82qWAY7mVoQ=="));
+        System.out.println(encoder.decrypt("uVeF7V0bd212I7n8fFZWLg=="));
     }
 }

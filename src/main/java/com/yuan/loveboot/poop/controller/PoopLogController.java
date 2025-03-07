@@ -44,7 +44,7 @@ public class PoopLogController {
         PageDTO dto = new PageDTO();
         dto.setSize(size);
         dto.setCurrent(current);
-        dto.setAsc(true);
+        dto.setAsc(false);
         dto.setOrder("log_time");
         return poopLogService.page(dto);
     }
