@@ -138,12 +138,12 @@
                 <configuration>
                     <!--  生成一个标准 JAR  -->
 <!--                    <layout>NONE</layout>-->
-                    <image>
-                        <builder>paketobuildpacks/builder-jammy-base:latest</builder>
-                        <env>
-                            <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
-                        </env>
-                    </image>
+<!--                    <image>-->
+<!--                        <builder>paketobuildpacks/builder-jammy-base:latest</builder>-->
+<!--                        <env>-->
+<!--                            <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>-->
+<!--                        </env>-->
+<!--                    </image>-->
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
@@ -161,42 +161,42 @@
             </plugin>
         </plugins>
     </build>
-    <profiles>
-        <profile>
-            <id>native</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.graalvm.buildtools</groupId>
-                        <artifactId>native-maven-plugin</artifactId>
-                        <version>0.10.5</version>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <!-- 跳过测试 -->
-                            <skipTests>true</skipTests>
-                            <!-- 指定主类 -->
-                            <mainClass>com.yuan.loveboot.LoveBootApplication</mainClass>
-                            <!-- Alpine专用构建参数 -->
-                            <buildArgs>
-                                <buildArg>--static</buildArg>
-                                <buildArg>--libc=musl</buildArg>
-                                <buildArg>-H:Target=linux-amd64</buildArg>
-                            </buildArgs>
-                            <!-- 输出文件名 -->
-                            <imageName>love-boot</imageName>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>build-native</id>
-                                <goals>
-                                    <goal>compile-no-fork</goal>
-                                </goals>
-                                <phase>package</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+<!--    <profiles>-->
+<!--        <profile>-->
+<!--            <id>native</id>-->
+<!--            <build>-->
+<!--                <plugins>-->
+<!--                    <plugin>-->
+<!--                        <groupId>org.graalvm.buildtools</groupId>-->
+<!--                        <artifactId>native-maven-plugin</artifactId>-->
+<!--                        <version>0.10.5</version>-->
+<!--                        <extensions>true</extensions>-->
+<!--                        <configuration>-->
+<!--                            &lt;!&ndash; 跳过测试 &ndash;&gt;-->
+<!--                            <skipTests>true</skipTests>-->
+<!--                            &lt;!&ndash; 指定主类 &ndash;&gt;-->
+<!--                            <mainClass>com.yuan.loveboot.LoveBootApplication</mainClass>-->
+<!--                            &lt;!&ndash; Alpine专用构建参数 &ndash;&gt;-->
+<!--                            <buildArgs>-->
+<!--                                <buildArg>&#45;&#45;static</buildArg>-->
+<!--                                <buildArg>&#45;&#45;libc=musl</buildArg>-->
+<!--                                <buildArg>-H:Target=linux-amd64</buildArg>-->
+<!--                            </buildArgs>-->
+<!--                            &lt;!&ndash; 输出文件名 &ndash;&gt;-->
+<!--                            <imageName>love-boot</imageName>-->
+<!--                        </configuration>-->
+<!--                        <executions>-->
+<!--                            <execution>-->
+<!--                                <id>build-native</id>-->
+<!--                                <goals>-->
+<!--                                    <goal>compile-no-fork</goal>-->
+<!--                                </goals>-->
+<!--                                <phase>package</phase>-->
+<!--                            </execution>-->
+<!--                        </executions>-->
+<!--                    </plugin>-->
+<!--                </plugins>-->
+<!--            </build>-->
+<!--        </profile>-->
+<!--    </profiles>-->
 </project>
