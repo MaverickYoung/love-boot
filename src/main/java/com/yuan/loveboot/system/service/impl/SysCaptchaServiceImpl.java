@@ -1,6 +1,6 @@
 package com.yuan.loveboot.system.service.impl;
 
-import com.wf.captcha.SpecCaptcha;
+import com.yuan.loveboot.common.utils.ArithmeticCaptcha;
 import com.yuan.loveboot.common.utils.TokenUtil;
 import com.yuan.loveboot.system.service.SysCaptchaService;
 import com.yuan.loveboot.system.vo.SysCaptchaVO;
@@ -31,11 +31,11 @@ public class SysCaptchaServiceImpl implements SysCaptchaService {
         // 生成验证码key
         String key = TokenUtil.generate();
 
-        // 生成验证码
-        // 定义图形验证码的长、宽、验证码字符数
-        SpecCaptcha specCaptcha = new SpecCaptcha(150, 50, 5);
-        String value = specCaptcha.text().toLowerCase();
-        String image = specCaptcha.toBase64();
+        // 生成算术类型验证码
+        ArithmeticCaptcha captcha = new ArithmeticCaptcha(150, 50);
+        captcha.getArithmeticString();  // 获取运算的公式：3+2=?
+        String value = captcha.text();  // 获取运算的结果：5
+        String image = captcha.toBase64();
 
         // 保存到缓存
         sysCacheService.cacheCaptcha(key, value);
@@ -72,4 +72,5 @@ public class SysCaptchaServiceImpl implements SysCaptchaService {
         // 效验成功
         return code.equalsIgnoreCase(captcha);
     }
+
 }
