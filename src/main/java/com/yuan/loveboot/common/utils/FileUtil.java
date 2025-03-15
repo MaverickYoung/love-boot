@@ -35,7 +35,7 @@ public class FileUtil {
     private String background;
 
     // 支持的图片格式
-    private static final Set<String> SUPPORTED_IMAGE_TYPES = Set.of("jpg", "jpeg", "png", "gif", "svg");
+    private static final Set<String> SUPPORTED_IMAGE_TYPES = Set.of("jpg", "jpeg", "png", "gif", "svg", "webp", "avif", "apng", "bmp", "ico", "tif");
 
     /**
      * 保存奖励图片
@@ -199,6 +199,7 @@ public class FileUtil {
             case "apng" -> "apng";
             case "bmp" -> "bmp";
             case "ico" -> "x-icon"; // ico 一般用 "image/x-icon"
+            case "tif", "tiff" -> "tiff";
             default -> throw new IllegalStateException("图片格式不支持: " + imageName);
         };
     }
