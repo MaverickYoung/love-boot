@@ -185,20 +185,24 @@ public class FileUtil {
      */
     private static String getMime(String imageName) {
         String extension = getFileExtension(imageName);
-        String mime;
-        if (extension != null) {
-            mime = switch (extension) {
-                case "jpg", "jpeg" -> "jpeg";
-                case "png" -> "png";
-                case "gif" -> "gif";
-                case "svg" -> "svg+xml";
-                default -> throw new IllegalStateException("图片格式不支持: " + imageName);
-            };
-        } else {
-            throw new IllegalStateException("图片格式不支持: " + imageName);
+        if (extension == null) {
+            throw new IllegalStateException("无法解析图片格式: " + imageName);
         }
-        return mime;
+
+        return switch (extension) {
+            case "jpg", "jpeg" -> "jpeg";
+            case "png" -> "png";
+            case "gif" -> "gif";
+            case "svg" -> "svg+xml";
+            case "webp" -> "webp";
+            case "avif" -> "avif";
+            case "apng" -> "apng";
+            case "bmp" -> "bmp";
+            case "ico" -> "x-icon"; // ico 一般用 "image/x-icon"
+            default -> throw new IllegalStateException("图片格式不支持: " + imageName);
+        };
     }
+
 
     /**
      * 获取文件扩展名
